@@ -1,6 +1,7 @@
 CFLAGS =  -Wall \
           -I$(SRCDIR)/evolution -I$(SRCDIR)/sequence \
-	  -O3 -march=pentium3
+	  -O3
+#	  -O3 -march=pentium3
 #	  -O3 -march=pentium4 -funroll-loops
 LIBS = 
 
@@ -33,11 +34,10 @@ documentation:
 	doxygen
 
 clean:
-	rm -rf $(DEPDIR) $(BUILDDIR) $(BINARY) `find . -name "*~"`
+	rm -r $(DEPDIR) $(BUILDDIR) $(LIBRARY) `find . -name "*~"`
 
 distclean: clean
-	rm -rf config/config.me config/config.log
-
+	rm -r doc/*
 
 config/config.me:
 	@echo Please run ./configure first to create the config/config.me file.

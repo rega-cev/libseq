@@ -4,8 +4,7 @@ INCLUDE = $(SEQINCLUDE) \
           -I$(SRCDIR)
 
 CFLAGS =  -O3 -Wall \
-	  $(INCLUDE) \
-	  -march=pentium3
+	  $(INCLUDE)
 
 LIBS = -L$(SEQLIBPATH) -lseq
 
