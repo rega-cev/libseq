@@ -57,39 +57,43 @@ void readFastaEntry(std::istream& i,
 		    std::string& sequence)
   throw (ParseException)
 {
-  char ch;
-  char c[512];
-  i.getline(c, 511);
+    char ch;
+    char c[512];
 
-  if (c[0] != '>') {
-    throw ParseException(std::string("FASTA file expected '>', got: '")
-			 + c[0] + "'");
-  }
+    i.getline(c, 511);
+    if (i) {
+      if (c[0] != '>') {
+	throw ParseException(std::string("FASTA file expected '>', got: '")
+			     + c[0] + "'");
+      }
 
-  std::string nameDesc = c + 1;
-  unsigned spacepos = nameDesc.find(" ");
-  name = nameDesc.substr(0, spacepos);
-  description = (spacepos == std::string::npos
-		 ? ""
-		 : nameDesc.substr(spacepos));
+      std::string nameDesc = c + 1;
+      unsigned spacepos = nameDesc.find(" ");
+      name = nameDesc.substr(0, spacepos);
+      description = (spacepos == std::string::npos
+		     ? ""
+		     : nameDesc.substr(spacepos));
 
-  for (ch = i.get(); (ch != EOF) && (ch != '>'); ch = i.get()) {
-    if (ch == '\n' || ch == '\r')
-      continue;
+      for (ch = i.get(); (ch != EOF) && (ch != '>'); ch = i.get()) {
+	if ((ch != '\n') && (ch != '\r') && (ch != ' ')) {
+	  if (((ch >= 'a') && (ch <= 'z'))
+	      || ((ch >= 'A') && (ch <= 'Z'))
+	      || (ch == '-') || (ch == '*')) {
+	    sequence += ch;
+	  } else {
+	    throw ParseException
+	      (std::string("Illegal character in FASTA file: '")
+	       + (char)ch + "'");
+	  }
+	}
 
-    if (((ch >= 'a') && (ch <= 'z'))
-	|| ((ch >= 'A') && (ch <= 'Z'))
-	|| (ch == '-') || (ch == '*')) {
-      sequence += ch;
-    } else {
-      throw ParseException
-	(std::string("Illegal character in FASTA file: '")
-	 + (char)ch + "'");
+	if (i.peek() == EOF)
+	  break;
+      }
+
+      if (ch == '>')
+	i.putback(ch);
     }
-  }
-
-  if (ch == '>')
-    i.putback(ch);
 }
 
 void writeFastaEntry(std::ostream& o,
