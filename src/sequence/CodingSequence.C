@@ -33,10 +33,12 @@ void CodingSequence::changeNucleotide(int pos, Nucleotide value)
     dirty_ = pos;
 }
 
-bool CodingSequence::isSynonymousMutation(int pos, Nucleotide value) const
+int CodingSequence::whatIfMutation(int pos, Nucleotide value,
+				   AminoAcid& oldAA,
+				   AminoAcid& newAA) const
 {
   if (isDirty())
-    updateAASequence();
+    updateAASequence();  
 
   const int aaPos = pos / 3;
   const int codonPos = pos % 3;
@@ -45,7 +47,19 @@ bool CodingSequence::isSynonymousMutation(int pos, Nucleotide value) const
 		      ntSequence_.begin() + (aaPos * 3 + 3));
   newcodon[codonPos] = value;
 
-  return (aaSequence_[aaPos] == Codon::translate(newcodon.begin()));
+  oldAA = aaSequence_[aaPos];
+  newAA = Codon::translate(newcodon.begin());
+
+  return aaPos;
+}
+
+bool CodingSequence::isSynonymousMutation(int pos, Nucleotide value) const
+{
+  AminoAcid oldAA, newAA;
+
+  whatIfMutation(pos, value, oldAA, newAA);
+
+  return (oldAA == newAA);
 }
 
 void CodingSequence::updateAASequence() const

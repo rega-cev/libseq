@@ -112,9 +112,9 @@ void Nucleotide::sampleAmbiguity()
   case NT_B:
     rep_ = sampleUniform(NT_C, NT_G, NT_T); break;
   case NT_N:
-    rep_ = sampleUniform(NT_A, NT_C, NT_G, NT_T);
-
+    rep_ = sampleUniform(NT_A, NT_C, NT_G, NT_T); break;
   default:
+    std::cerr << rep_ << std::endl;
     assert(false);
   }
 }

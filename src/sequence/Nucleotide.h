@@ -140,6 +140,12 @@ public:
    */
   void sampleAmbiguity();
 
+
+  /**
+   * So that you can use it as a key for STL containers.
+   */
+  bool operator< (const Nucleotide other) const { return rep_ < other.rep_; }
+
 private:
   static const char NT_CHAR[];
 

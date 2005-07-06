@@ -145,16 +145,21 @@ public:
   /**
    * Are two amino acids identical ?
    */
-  bool operator== (const AminoAcid& other) const {
+  bool operator== (const AminoAcid other) const {
     return other.rep_ == rep_;
   }
 
   /**
    * Are two amino acids different ?
    */
-  bool operator!= (const AminoAcid& other) const {
+  bool operator!= (const AminoAcid other) const {
     return !(*this == other);
   }
+
+  /**
+   * So that you can use it as a key for STL containers.
+   */
+  bool operator< (const AminoAcid other) const { return rep_ < other.rep_; }
 
 private:
   static const char AA_CHAR[];

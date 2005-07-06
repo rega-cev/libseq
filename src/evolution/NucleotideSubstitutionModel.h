@@ -15,7 +15,8 @@ class NucleotideSubstitutionModel
 {
 public:
   /**
-   * Construct a substitution model based on:
+   * Construct a stationary substitution model
+   * based on:
    * <ul>
    *   <li> the 4 stationary nucleotide frequencies
    *   <li> the (relative) 6 symmetrical substitution rates.
@@ -25,6 +26,22 @@ public:
   NucleotideSubstitutionModel(double piA, double piC, double piG, double piT,
 			      double rAC, double rAG, double rAT,
 			      double rCG, double rCT, double rGT,
+			      double errorRate);
+
+  /**
+   * Construct a (non-stationary) substitution model based on:
+   * <ul>
+   *   <li> the 12 relative substitution rates
+   *   <LI> the 4 stationary nucleotide frequencies used to calibrate
+   *        the average error rate per generation per site
+   *   <li> the average error rate per generation per site
+   * </ul>
+   */
+  NucleotideSubstitutionModel(double rAC, double rAG, double rAT,
+			      double rCA, double rCG, double rCT,
+			      double rGA, double rGC, double rGT,
+			      double rTA, double rTC, double rTG,
+			      double piA, double piC, double piG, double piT,
 			      double errorRate);
 
   /**

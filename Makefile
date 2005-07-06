@@ -1,8 +1,9 @@
 CFLAGS =  -Wall \
           -I$(SRCDIR)/evolution -I$(SRCDIR)/sequence \
-	  -O3
+	  -g
+	  -O3 -march=pentium4 -funroll-loops
+#	  -O3 -march=opteron
 #	  -O3 -march=pentium3
-#	  -O3 -march=pentium4 -funroll-loops
 LIBS = 
 
 LIBRARY=libseq.a

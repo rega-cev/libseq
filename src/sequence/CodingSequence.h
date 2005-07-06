@@ -47,6 +47,14 @@ class CodingSequence
   void changeNucleotide(int pos, Nucleotide value);
 
   /**
+   * Investigate the effect of a nucleotide mutation on the amino acid
+   * sequence. This returns both the old (oldAA) and new amino acid (newAA)
+   * encoded by the mutation, as well as the position (return value).
+   */
+  int whatIfMutation(int pos, Nucleotide value,
+		     AminoAcid& oldAA, AminoAcid& newAA) const;
+
+  /**
    * Investigate whether a give nucleotide mutation is synonymous or
    * non-synonymous with respect to the amino acid sequence.
    */
