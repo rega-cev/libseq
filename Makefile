@@ -1,7 +1,7 @@
 CFLAGS =  -Wall \
           -I$(SRCDIR)/evolution -I$(SRCDIR)/sequence \
-	  -g
-	  -O3 -march=pentium4 -funroll-loops
+	  -O3
+#	  -O3 -march=pentium4 -funroll-loops
 #	  -O3 -march=opteron
 #	  -O3 -march=pentium3
 LIBS = 
@@ -39,11 +39,5 @@ clean:
 
 distclean: clean
 	rm -r doc/*
-
-config/config.me:
-	@echo Please run ./configure first to create the config/config.me file.
-	@echo ./configure --help gives an overview of the possible command line parameters.
-	@echo make will now exit with an error.
-	exit 1
 
 -include $(DEPS)
