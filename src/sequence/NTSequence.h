@@ -64,6 +64,12 @@ public:
   void sampleAmbiguities();
 
   /**
+   * Add all the possible non-ambiguous sequences possibly represented by
+   * this sequence to result.
+   */
+  void nonAmbiguousSequences(std::vector<NTSequence>& result) const;
+
+  /**
    * Represent the sequence data as a string.
    */
   std::string asString() const;
@@ -91,6 +97,9 @@ public:
 private:
   std::string name_;
   std::string description_;
+
+  void iterateNonAmbiguous(const NTSequence& head,
+			   std::vector<NTSequence>& result) const;
 };
 
 /**

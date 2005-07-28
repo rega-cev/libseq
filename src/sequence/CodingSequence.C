@@ -75,4 +75,29 @@ void CodingSequence::updateAASequence() const
   dirty_ = D_CLEAN;
 }
 
+void CodingSequence::allAASequences(std::vector<std::set<AminoAcid> >& result)
+  const
+{
+  for (unsigned i = 0; i < ntSequence_.size(); i += 3) {
+    result.push_back(Codon::translateAll(ntSequence_.begin() + i));
+  }
 };
+
+extern void printAmbiguousAASequence(std::ostream& out,
+				     const CodingSequence& cs)
+{
+  std::vector<std::set<AminoAcid> > aas;
+  cs.allAASequences(aas);
+
+  for (unsigned i = 0; i < aas.size(); ++i) {
+    if (aas[i].size() > 1)
+      out << "{";
+    for (std::set<AminoAcid>::const_iterator j = aas[i].begin();
+	 j != aas[i].end(); ++j)
+      out << *j;
+    if (aas[i].size() > 1)
+      out << "}";
+  }
+}
+
+}

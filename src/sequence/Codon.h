@@ -3,6 +3,7 @@
 #define CODON_H_
 
 #include <string>
+#include <set>
 
 #include "NTSequence.h"
 #include "AminoAcid.h"
@@ -25,6 +26,9 @@ public:
    * acid.
    */
   static AminoAcid translate(const NTSequence::const_iterator triplet);
+
+  static std::set<AminoAcid>
+     translateAll(const NTSequence::const_iterator triplet);
 };
 
 };

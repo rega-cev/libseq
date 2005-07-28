@@ -2,6 +2,7 @@
 #ifndef CODING_SEQUENCE_H_
 #define CODING_SEQUENCE_H_
 
+#include <set>
 #include <iostream>
 
 #include "NTSequence.h"
@@ -60,6 +61,12 @@ class CodingSequence
    */
   bool isSynonymousMutation(int pos, Nucleotide value) const;
 
+  /**
+   * Get the amino acid sequence possibilities, taking into account
+   * all ambiguities
+   */
+  void allAASequences(std::vector<std::set<AminoAcid> >& result) const;
+
  protected:
   void updateAASequence() const;
 
@@ -74,6 +81,15 @@ class CodingSequence
   static const int   D_CLEAN = -1;
   static const int   D_COMPLETE = -2;
 };
+
+  /**
+   * Write an amino acid sequence with all possible ambiguities
+   * to the stream.
+   *
+   * The format is e.g. TW{LM}YS
+   */
+extern void printAmbiguousAASequence(std::ostream& out,
+				     const CodingSequence& cs);
 
 };
 

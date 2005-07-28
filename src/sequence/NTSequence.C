@@ -38,6 +38,38 @@ void NTSequence::sampleAmbiguities()
   }
 }
 
+void NTSequence::nonAmbiguousSequences(std::vector<NTSequence>& result) const
+{
+  iterateNonAmbiguous(NTSequence(), result);
+}
+
+void NTSequence::iterateNonAmbiguous(const NTSequence& head,
+				     std::vector<NTSequence>& result) const
+{
+  /*
+   * find the next ambigous codon (if any)
+   */
+  NTSequence s = head;
+  unsigned i = head.size();
+  for (; i < size(); ++i)
+    if ((*this)[i].isAmbiguity())
+      break;
+    else
+      s.push_back((*this)[i]);
+
+  if (i == size())
+    result.push_back(s);
+  else {
+    std::vector<Nucleotide> ambiguities;
+    (*this)[i].nonAmbiguousNucleotides(ambiguities);
+    for (unsigned i = 0; i < ambiguities.size(); ++i) {
+      s.push_back(ambiguities[i]);
+      iterateNonAmbiguous(s, result);
+      s.pop_back();
+    }
+  }
+}
+
 std::string NTSequence::asString() const
 {
   std::string result(size(), '-');

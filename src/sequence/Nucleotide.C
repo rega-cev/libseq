@@ -119,6 +119,76 @@ void Nucleotide::sampleAmbiguity()
   }
 }
 
+/**
+ * Get all non ambiguous nucleotides represented by this nucleotide.
+ */ 
+void Nucleotide::nonAmbiguousNucleotides(std::vector<Nucleotide>& result) const
+{
+  switch (rep_) {
+  case NT_A:
+  case NT_C:
+  case NT_G:
+  case NT_T:
+  case NT_GAP:
+    result.push_back(*this);
+    break;
+  case NT_M:
+    result.push_back(A);
+    result.push_back(C);
+    break;
+  case NT_R:
+    result.push_back(A);
+    result.push_back(G);
+    break;
+  case NT_W:
+    result.push_back(A);
+    result.push_back(T);
+    break;
+  case NT_S:
+    result.push_back(C);
+    result.push_back(G);
+    break;
+  case NT_Y:
+    result.push_back(C);
+    result.push_back(T);
+    break;
+  case NT_K:
+    result.push_back(G);
+    result.push_back(T);
+    break;
+  case NT_V:
+    result.push_back(A);
+    result.push_back(C);
+    result.push_back(G);
+    break;
+  case NT_H:
+    result.push_back(A);
+    result.push_back(C);
+    result.push_back(T);
+    break;
+  case NT_D:
+    result.push_back(A);
+    result.push_back(G);
+    result.push_back(T);
+    break;
+  case NT_B:
+    result.push_back(C);
+    result.push_back(G);
+    result.push_back(T);
+    break;
+  case NT_N:
+    result.push_back(A);
+    result.push_back(C);
+    result.push_back(G);
+    result.push_back(T);
+    break;
+  default:
+    std::cerr << rep_ << std::endl;
+    assert(false);
+  }
+}
+
+
 std::ostream& operator<< (std::ostream& s, const Nucleotide nt)
 {
   return s << nt.toChar();

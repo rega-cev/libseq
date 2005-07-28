@@ -106,4 +106,20 @@ AminoAcid Codon::translate(const NTSequence::const_iterator triplet)
               [(triplet + 2)->intRep()];
 }
 
+std::set<AminoAcid>
+Codon::translateAll(const NTSequence::const_iterator triplet)
+{
+  std::set<AminoAcid> result;
+
+  NTSequence s(triplet, triplet + 3);
+
+  std::vector<NTSequence> possibilities;
+  s.nonAmbiguousSequences(possibilities);
+
+  for (unsigned i = 0; i < possibilities.size(); ++i)
+    result.insert(translate(possibilities[i].begin()));
+
+  return result;
+}
+
 };
