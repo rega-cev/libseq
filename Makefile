@@ -1,9 +1,8 @@
+OPTFLAGS = -O3 -march=pentium4
+#OPTFLAGS = -O3 -march=opteron
+
 CFLAGS =  -Wall \
-          -I$(SRCDIR)/evolution -I$(SRCDIR)/sequence \
-	  -O3
-#	  -O3 -march=pentium4 -funroll-loops
-#	  -O3 -march=opteron
-#	  -O3 -march=pentium3
+          -I$(SRCDIR)/evolution -I$(SRCDIR)/sequence $(OPTFLAGS)
 LIBS = 
 
 LIBRARY=libseq.a

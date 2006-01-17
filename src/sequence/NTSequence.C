@@ -100,7 +100,7 @@ void readFastaEntry(std::istream& i,
       }
 
       std::string nameDesc = c + 1;
-      unsigned spacepos = nameDesc.find(" ");
+      std::string::size_type spacepos = nameDesc.find(" ");
       name = nameDesc.substr(0, spacepos);
       description = (spacepos == std::string::npos
 		     ? ""
