@@ -29,6 +29,12 @@ public:
    * and empty description.
    */
   NTSequence();
+ 
+  /**
+   * Create a nucleotide sequence of length size, filled with
+   * Nucleotide::N, with empty name and emtpy description.
+   */
+  NTSequence(unsigned size);
 
   /**
    * Create a nucleotide sequence with given name and description, and

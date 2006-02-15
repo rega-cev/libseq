@@ -5,6 +5,12 @@
 
 namespace seq {
 
+CodingSequence::CodingSequence()
+  : ntSequence_(),
+    aaSequence_(),
+    dirty_(D_COMPLETE)
+{ }
+
 CodingSequence::CodingSequence(const NTSequence& aNtSequence)
   : ntSequence_(aNtSequence),
     aaSequence_(aNtSequence.size() / 3),

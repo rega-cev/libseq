@@ -9,6 +9,10 @@ NTSequence::NTSequence()
   : std::vector<Nucleotide>()
 { }
 
+NTSequence::NTSequence(unsigned size)
+  : std::vector<Nucleotide>(size)
+{ }
+
 NTSequence::NTSequence(const std::string name, const std::string description,
 		       const std::string aSeqString,
 		       bool sampleAmbiguities)

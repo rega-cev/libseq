@@ -22,6 +22,11 @@ class CodingSequence
 {
  public:
   /**
+   * Construct a coding sequence with empty nucleotide sequence.
+   */
+  CodingSequence();
+
+  /**
    * Construct a coding sequence based on the given nucleotide
    * sequence. The sequence must be translatable as per
    * AASequence::translate(const NTSequence&).

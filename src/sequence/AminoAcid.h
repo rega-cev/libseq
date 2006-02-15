@@ -165,7 +165,7 @@ private:
   static const char AA_CHAR[];
   static const char * const AA_TLA[];
 
-  AminoAcid(int rep)
+  explicit AminoAcid(int rep)
     : rep_(rep) {
   }
 

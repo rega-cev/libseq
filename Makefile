@@ -8,7 +8,8 @@ LIBS =
 LIBRARY=libseq.a
 
 FILES=sequence/Nucleotide sequence/AminoAcid sequence/NTSequence \
-      sequence/AASequence sequence/Codon sequence/CodingSequence \
+      sequence/AASequence sequence/Codon sequence/Mutation \
+      sequence/CodingSequence \
       evolution/NucleotideSubstitutionModel 
 
 SRCDIR=src
