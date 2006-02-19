@@ -52,6 +52,8 @@ public:
    */
   double getMu(Nucleotide fromNT, Nucleotide toNT) const;
 
+  void print(std::ostream& s) const;
+
 private:
   double matrix_[4][4];
 };

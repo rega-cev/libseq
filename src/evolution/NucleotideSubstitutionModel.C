@@ -120,4 +120,14 @@ double NucleotideSubstitutionModel::getMu(Nucleotide fromNT,
   return matrix_[fromNT.intRep()][toNT.intRep()];
 }
 
+void NucleotideSubstitutionModel::print(std::ostream& s) const
+{
+  for (int i = 0; i < 4; ++i)
+    for (int j = 0; j < 4; ++j) {
+      std::cerr << "r" << (Nucleotide::fromRep(i)).toChar()
+		<< (Nucleotide::fromRep(j)).toChar()
+		<< " = " << matrix_[i][j] << std::endl;
+    }
+}
+
 };
