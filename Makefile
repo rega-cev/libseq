@@ -1,11 +1,13 @@
 OPTFLAGS = -O3 -march=pentium4
+ARCH=intel
 #OPTFLAGS = -O3 -march=opteron
+#ARCH=opteron
 
 CFLAGS =  -Wall \
           -I$(SRCDIR)/evolution -I$(SRCDIR)/sequence $(OPTFLAGS)
 LIBS = 
 
-LIBRARY=libseq.a
+LIBRARY=$(BUILDDIR)/libseq.a
 
 FILES=sequence/Nucleotide sequence/AminoAcid sequence/NTSequence \
       sequence/AASequence sequence/Codon sequence/Mutation \
@@ -13,7 +15,7 @@ FILES=sequence/Nucleotide sequence/AminoAcid sequence/NTSequence \
       evolution/NucleotideSubstitutionModel 
 
 SRCDIR=src
-BUILDDIR=obj
+BUILDDIR=obj-$(ARCH)
 DEPDIR=dep
 
 SOURCES=$(patsubst %,$(SRCDIR)/%.C,$(FILES))
