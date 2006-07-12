@@ -22,8 +22,7 @@ To build the simple test programs
 
 (Inside the build directory:)
 
-$ cd test
-$ make
+$ make -C test
 
 To install
 ----------

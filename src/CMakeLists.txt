@@ -1,4 +1,4 @@
-SET(SOURCES,
+SET(SOURCES
   sequence/Nucleotide.C sequence/AminoAcid.C sequence/NTSequence.C
   sequence/AASequence.C sequence/Codon.C sequence/Mutation.C
   sequence/CodingSequence.C evolution/NucleotideSubstitutionModel.C
