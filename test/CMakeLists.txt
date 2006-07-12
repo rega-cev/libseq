@@ -1,0 +1,5 @@
+ADD_EXECUTABLE(aafastaread src/AAFastaRead.C)
+ADD_EXECUTABLE(ntfastaread src/NTFastaRead.C)
+TARGET_LINK_LIBRARIES(aafastaread seq)
+TARGET_LINK_LIBRARIES(ntfastaread seq)
+INCLUDE_DIRECTORIES(${SEQ_SOURCE_DIR}/src/sequence ${SEQ_SOURCE_DIR}/src/evolution)

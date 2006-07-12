@@ -1,0 +1,43 @@
+Libseq C++ Bio sequence library
+-------------------------------
+
+Requirements
+------------
+
+* cmake (www.cmake.org)
+* C++ environment
+
+Build instructions
+------------------
+
+Create a temporary build directory (for example within the project root)
+
+$ mkdir build
+$ cd build
+$ cmake ../
+$ make
+
+To build the simple test programs
+---------------------------------
+
+(Inside the build directory:)
+
+$ cd test
+$ make
+
+To install
+----------
+
+$ make install
+
+To create the documentation
+---------------------------
+
+(In the project root)
+
+$ doxygen
+
+Author
+------
+
+Koen Deforche (koen.deforche@gmail.com)
