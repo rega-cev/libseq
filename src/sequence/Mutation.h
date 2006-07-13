@@ -61,7 +61,8 @@ typedef class Mutation<Nucleotide> NTMutation;
 typedef class Mutation<AminoAcid> AAMutation;
 
 extern std::set<AAMutation> readMutations(std::istream& mutationFile,
-					  std::string prefix);
+					  std::string prefix)
+  throw (ParseException);
 
 };
 

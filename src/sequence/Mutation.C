@@ -6,6 +6,7 @@ namespace seq {
 
 std::set<AAMutation> readMutations(std::istream& mutationFile,
 				   std::string prefix)
+  throw (ParseException)
 {
   std::set<AAMutation> result;
 
@@ -16,12 +17,36 @@ std::set<AAMutation> readMutations(std::istream& mutationFile,
 
   for (csv_tok::iterator i = tok.begin(); i != tok.end(); ++i) {
     std::string mutation = *i;
-    AminoAcid aa(mutation[mutation.length() - 1]);
-    int pos
-      = atoi(mutation.substr(prefix.length(),
-                             mutation.length() - prefix.length() - 1).c_str());
 
-    result.insert(AAMutation(pos, aa));
+    if (mutation.length() < prefix.length() + 2)
+      throw ParseException("Error while parsing mutation '"
+			   + mutation + "': too short for mutation with "
+			   "prefix '" + prefix + "'");
+
+    if (mutation.substr(0, prefix.length()) != prefix)
+      throw ParseException("Error while parsing mutation '"
+			   + mutation + "': expected to start with '"
+			   + prefix + "'");
+
+    try {
+      AminoAcid aa(mutation[mutation.length() - 1]);
+
+      char *endptr;
+      int pos
+	= strtol(mutation.substr(prefix.length(),
+				 mutation.length()
+				 - prefix.length() - 1).c_str(),
+		 &endptr, 10);
+
+      if (*endptr != 0)
+	throw ParseException("could not parse position");
+
+      result.insert(AAMutation(pos, aa));
+    } catch (ParseException& e) {
+      throw ParseException("Error while parsing mutation '"
+			   + mutation + "': " + e.message());
+    }
+
   }
 
   return result;

@@ -5,6 +5,7 @@ SET(SOURCES
 )  
 
 ADD_LIBRARY(seq ${SOURCES})
+
 INCLUDE_DIRECTORIES(${SEQ_SOURCE_DIR}/src/sequence ${SEQ_SOURCE_DIR}/src/evolution)
 INSTALL_TARGETS(/lib seq)
 SUBDIRS(sequence evolution)
