@@ -12,6 +12,8 @@ namespace seq {
 
 /**
  * A mutation in a sequence of type Char.
+ *
+ * \sa AAMutation, NTMutation
  */
 template<typename Char>
 class Mutation
@@ -57,7 +59,13 @@ public:
   Char from_, to_;
 };
 
+/**
+ * A typedef for nucleotide mutations.
+ */
 typedef class Mutation<Nucleotide> NTMutation;
+/**
+ * A typedef for amino acid mutations.
+ */
 typedef class Mutation<AminoAcid> AAMutation;
 
 extern std::set<AAMutation> readMutations(std::istream& mutationFile,
