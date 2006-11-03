@@ -166,6 +166,32 @@ private:
  */
 extern std::ostream& operator<< (std::ostream& o, const Nucleotide nt);
 
+inline Nucleotide::Nucleotide(char c)
+  throw (ParseException)
+{
+  switch (toupper(c)) {
+  case 'A': rep_ = NT_A; break;
+  case 'C': rep_ = NT_C; break;
+  case 'G': rep_ = NT_G; break;
+  case 'T': case 'U': rep_ = NT_T; break;
+  case 'M': rep_ = NT_M; break;
+  case 'R': rep_ = NT_R; break;
+  case 'W': rep_ = NT_W; break;
+  case 'S': rep_ = NT_S; break;
+  case 'Y': rep_ = NT_Y; break;
+  case 'K': rep_ = NT_K; break;
+  case 'V': rep_ = NT_V; break;
+  case 'H': rep_ = NT_H; break;
+  case 'D': rep_ = NT_D; break;
+  case 'B': rep_ = NT_B; break;
+  case 'N': rep_ = NT_N; break;
+  case '-': rep_ = NT_GAP; break;
+  default:
+    throw ParseException
+      (std::string("Invalid nucleotide character: '") + c + "'");
+  }
+}
+
 };
 
 #endif // NUCLEOTIDE_H_
