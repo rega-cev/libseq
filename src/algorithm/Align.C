@@ -53,17 +53,19 @@ double NeedlemanWunsh(std::vector<Symbol>& seq1,
   for (unsigned i = 0; i < seq1Size+1; ++i)
     gapsLengthTable[i] = new int[seq2Size+1]; // >0: horiz, <0: vert
 
+  double edgeGapExtensionScore = 0;
+
   /*
    * compute table
    */
   dnTable[0][0] = 0;
   gapsLengthTable[0][0] = 0;
   for (unsigned i = 1; i < seq1Size+1; ++i) {
-    dnTable[i][0] = dnTable[i-1][0] + gapExtensionScore;
+    dnTable[i][0] = dnTable[i-1][0] + edgeGapExtensionScore;
     gapsLengthTable[i][0] = gapsLengthTable[i-1][0] + 1;
   }
   for (unsigned j = 1; j < seq2Size+1; ++j) {
-    dnTable[0][j] = dnTable[0][j-1] + gapExtensionScore;
+    dnTable[0][j] = dnTable[0][j-1] + edgeGapExtensionScore;
     gapsLengthTable[0][j] = gapsLengthTable[0][j-1] - 1;
   }
 
@@ -74,15 +76,17 @@ double NeedlemanWunsh(std::vector<Symbol>& seq1,
 	= dnTable[i-1][j-1]
 	+ weightMatrix[seq1[i-1].intRep()][seq2[j-1].intRep()];
 
+      double ges = (j == seq2Size) ? edgeGapExtensionScore : gapExtensionScore;
+
       double horizGapScore = ((gapsLengthTable[i-1][j] > 0) || (j == seq2Size)
-			      ? gapExtensionScore
-			      : gapOpenScore + gapExtensionScore);
+			      ? ges : gapOpenScore + ges);
       double sgaphoriz
 	= dnTable[i-1][j] + horizGapScore;
 
+      ges = (i == seq1Size) ? edgeGapExtensionScore : gapExtensionScore;
+
       double vertGapScore = (gapsLengthTable[i][j-1] < 0 || (i == seq1Size)
-			     ? gapExtensionScore
-			     : gapOpenScore + gapExtensionScore);
+			     ? ges : gapOpenScore + ges);
       double sgapvert
 	= dnTable[i][j-1] + vertGapScore;
 
@@ -123,6 +127,8 @@ double NeedlemanWunsh(std::vector<Symbol>& seq1,
     delete[] dnTable[i];
     delete[] gapsLengthTable[i];
   }
+  delete[] dnTable;
+  delete[] gapsLengthTable;
 
   return score;
 }
@@ -153,32 +159,44 @@ double ComputeAlignScore(const NTSequence& seq1, const NTSequence& seq2,
 			 double **ntWeightMatrix)
 {
   double score = 0;
-  bool seq1Gap = true;
-  bool seq2Gap = true;
+  int seq1GapLength = 0;
+  int seq2GapLength = 0;
 
+  bool seq1LeadingGap = true;
+  bool seq2LeadingGap = true;
+
+  double edgeGapExtensionScore = 0;
+  
   for (unsigned i = 0; i < seq1.size(); ++i) {
     if (seq1[i] == Nucleotide::GAP) {
-      if (!seq1Gap) {
-	seq1Gap = true;
-	score += gapOpenScore;
-      }
-      score += gapExtensionScore;
+      ++seq1GapLength;
     } else {
-      seq1Gap = false;
+      if (seq1GapLength)
+	if (seq1LeadingGap)
+	  score += seq1GapLength * edgeGapExtensionScore;
+	else
+	  score += gapOpenScore + seq1GapLength * gapExtensionScore;
+
+      seq1GapLength = 0;
 
       if (seq2[i] == Nucleotide::GAP) {
-	if (!seq2Gap) {
-	  seq2Gap = true;
-	  score += gapOpenScore;
-	}
-	score += gapExtensionScore;
+	++seq2GapLength;
       } else {
-	seq2Gap = false;
+	if (seq2GapLength)
+	  if (seq2LeadingGap)
+	    score += seq2GapLength * edgeGapExtensionScore;
+	  else
+	    score += gapOpenScore + seq2GapLength * gapExtensionScore;
+
+	seq2GapLength = 0;
 
 	score += ntWeightMatrix[seq1[i].intRep()][seq2[i].intRep()];
       }
     }
   }
+
+  score += seq1GapLength * edgeGapExtensionScore;
+  score += seq2GapLength * edgeGapExtensionScore;
 
   return score;
 }
@@ -190,7 +208,7 @@ double AlignLikeAA(NTSequence& seq1, NTSequence& seq2,
 {
   NTSequence seq2ORFLead(seq2.begin(), seq2.begin() + ORF);
   seq2.erase(seq2.begin(), seq2.begin() + ORF);
-  int aaLength = (seq2.size() - ORF) / 3;
+  int aaLength = seq2.size() / 3;
   NTSequence seq2ORFEnd(seq2.begin() + aaLength*3, seq2.end());
   seq2.erase(seq2.begin() + aaLength*3, seq2.end());
 
@@ -198,21 +216,32 @@ double AlignLikeAA(NTSequence& seq1, NTSequence& seq2,
   int lastNonGap = -1;
 
   for (unsigned i = 0; i < seqAA1.size(); ++i) {
-    if (seqAA1[i] == AminoAcid::GAP)
-      seq1.insert(seq1.begin() + (i*3), 3, Nucleotide::GAP);
-    if (seqAA2[i] == AminoAcid::GAP)
-      seq2.insert(seq2.begin() + (i*3), 3, Nucleotide::GAP);
-    else {
+    if (seqAA1[i] == AminoAcid::GAP) {
+      if (i*3 < seq1.size())
+	seq1.insert(seq1.begin() + (i*3), 3, Nucleotide::GAP);
+      else
+	seq1.insert(seq1.end(), 3, Nucleotide::GAP);
+    }
+
+    if (seqAA2[i] == AminoAcid::GAP) {
+      if (i*3 < seq2.size())
+	seq2.insert(seq2.begin() + (i*3), 3, Nucleotide::GAP);
+      else
+	seq2.insert(seq2.end(), 3, Nucleotide::GAP);
+    } else {
       if (firstNonGap == -1)
 	firstNonGap = i*3;
       lastNonGap = i*3 + 3;
     }
   }
 
-  for (unsigned i = 0; i < seq2ORFLead.size(); ++i)
-    seq2[firstNonGap - seq2ORFLead.size() + i] = seq2ORFLead[i];
+  for (int i = 0; i < (int)seq2ORFLead.size(); ++i)
+    if ((firstNonGap - (int)seq2ORFLead.size() + i) >= 0)
+      seq2[firstNonGap - (int)seq2ORFLead.size() + i] = seq2ORFLead[i];
+
   for (unsigned i = 0; i < seq2ORFEnd.size(); ++i)
-    seq2[lastNonGap + i] = seq2ORFEnd[i];
+    if (lastNonGap + i < seq2.size())
+      seq2[lastNonGap + i] = seq2ORFEnd[i];
 
   return ComputeAlignScore(seq1, seq2, gapOpenScore, gapExtensionScore,
 			   ntWeightMatrix);
