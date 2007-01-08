@@ -22,11 +22,15 @@ NTSequence::NTSequence(const std::string name, const std::string description,
     description_(description)
 {
   for (unsigned i = 0; i < aSeqString.length(); ++i) {
-    Nucleotide nt(aSeqString[i]);
-    if (sampleAmbiguities)
-      nt.sampleAmbiguity();
+    try {
+      Nucleotide nt(aSeqString[i]);
+      if (sampleAmbiguities)
+	nt.sampleAmbiguity();
 
-    (*this)[i] = nt;
+      (*this)[i] = nt;
+    } catch (ParseException& e) {
+      throw ParseException("Sequence '" + name + "': " + e.message());
+    }
   }
 }
 
@@ -118,7 +122,8 @@ void readFastaEntry(std::istream& i,
 	    sequence += ch;
 	  } else {
 	    throw ParseException
-	      (std::string("Illegal character in FASTA file: '")
+	      (std::string("Illegal character in FASTA, sequence '")
+	       + "'" + name + "': '"
 	       + (char)ch + "'");
 	  }
 	}

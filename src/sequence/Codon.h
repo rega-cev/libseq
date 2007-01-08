@@ -29,6 +29,8 @@ public:
 
   static std::set<AminoAcid>
      translateAll(const NTSequence::const_iterator triplet);
+
+  static std::set<NTSequence> codonsFor(AminoAcid a);
 };
 
 };

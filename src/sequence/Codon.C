@@ -122,4 +122,141 @@ Codon::translateAll(const NTSequence::const_iterator triplet)
   return result;
 }
 
+namespace {
+  void addTriplet(std::set<NTSequence>& result,
+		  Nucleotide c1, Nucleotide c2, Nucleotide c3)
+  {
+    NTSequence triplet;
+    triplet.push_back(c1);
+    triplet.push_back(c2);
+    triplet.push_back(c3);
+
+    result.insert(triplet);
+  }
+
+}
+
+std::set<NTSequence> Codon::codonsFor(AminoAcid a)
+{
+  std::set<NTSequence> result;
+
+  switch (a.intRep()) {
+  case AminoAcid::AA_A:
+    addTriplet(result, Nucleotide::G, Nucleotide::C, Nucleotide::T);
+    addTriplet(result, Nucleotide::G, Nucleotide::C, Nucleotide::C);
+    addTriplet(result, Nucleotide::G, Nucleotide::C, Nucleotide::A);
+    addTriplet(result, Nucleotide::G, Nucleotide::C, Nucleotide::G);
+    break;
+  case AminoAcid::AA_C:
+    addTriplet(result, Nucleotide::T, Nucleotide::G, Nucleotide::T);
+    addTriplet(result, Nucleotide::T, Nucleotide::G, Nucleotide::C);
+    break;
+  case AminoAcid::AA_D:
+    addTriplet(result, Nucleotide::G, Nucleotide::A, Nucleotide::T);
+    addTriplet(result, Nucleotide::G, Nucleotide::A, Nucleotide::C);
+    break;
+  case AminoAcid::AA_E:
+    addTriplet(result, Nucleotide::G, Nucleotide::A, Nucleotide::A);
+    addTriplet(result, Nucleotide::G, Nucleotide::A, Nucleotide::G);
+    break;
+  case AminoAcid::AA_F:
+    addTriplet(result, Nucleotide::T, Nucleotide::T, Nucleotide::T);
+    addTriplet(result, Nucleotide::T, Nucleotide::T, Nucleotide::C);
+    break;
+  case AminoAcid::AA_G:
+    addTriplet(result, Nucleotide::G, Nucleotide::G, Nucleotide::T);
+    addTriplet(result, Nucleotide::G, Nucleotide::G, Nucleotide::C);
+    addTriplet(result, Nucleotide::G, Nucleotide::G, Nucleotide::A);
+    addTriplet(result, Nucleotide::G, Nucleotide::G, Nucleotide::G);
+    break;   
+  case AminoAcid::AA_H:
+    addTriplet(result, Nucleotide::C, Nucleotide::A, Nucleotide::T);
+    addTriplet(result, Nucleotide::C, Nucleotide::A, Nucleotide::C);
+    break;    
+  case AminoAcid::AA_I:
+    addTriplet(result, Nucleotide::A, Nucleotide::T, Nucleotide::T);
+    addTriplet(result, Nucleotide::A, Nucleotide::T, Nucleotide::C);
+    addTriplet(result, Nucleotide::A, Nucleotide::T, Nucleotide::A);
+    break;    
+  case AminoAcid::AA_K:
+    addTriplet(result, Nucleotide::A, Nucleotide::A, Nucleotide::A);
+    addTriplet(result, Nucleotide::A, Nucleotide::A, Nucleotide::G);
+    break;    
+  case AminoAcid::AA_L:
+    addTriplet(result, Nucleotide::T, Nucleotide::T, Nucleotide::A);
+    addTriplet(result, Nucleotide::T, Nucleotide::T, Nucleotide::G);
+    addTriplet(result, Nucleotide::C, Nucleotide::T, Nucleotide::T);
+    addTriplet(result, Nucleotide::C, Nucleotide::T, Nucleotide::C);
+    addTriplet(result, Nucleotide::C, Nucleotide::T, Nucleotide::A);
+    addTriplet(result, Nucleotide::C, Nucleotide::T, Nucleotide::G);
+    break;    
+  case AminoAcid::AA_M:
+    addTriplet(result, Nucleotide::A, Nucleotide::T, Nucleotide::G);
+    break;
+  case AminoAcid::AA_N:
+    addTriplet(result, Nucleotide::A, Nucleotide::A, Nucleotide::T);
+    addTriplet(result, Nucleotide::A, Nucleotide::A, Nucleotide::C);
+    break;    
+  case AminoAcid::AA_P:
+    addTriplet(result, Nucleotide::C, Nucleotide::C, Nucleotide::T);
+    addTriplet(result, Nucleotide::C, Nucleotide::C, Nucleotide::C);
+    addTriplet(result, Nucleotide::C, Nucleotide::C, Nucleotide::A);
+    addTriplet(result, Nucleotide::C, Nucleotide::C, Nucleotide::G);
+    break;
+  case AminoAcid::AA_Q:
+    addTriplet(result, Nucleotide::C, Nucleotide::A, Nucleotide::A);
+    addTriplet(result, Nucleotide::C, Nucleotide::A, Nucleotide::G);
+    break;
+  case AminoAcid::AA_R:
+    addTriplet(result, Nucleotide::C, Nucleotide::G, Nucleotide::T);
+    addTriplet(result, Nucleotide::C, Nucleotide::G, Nucleotide::C);
+    addTriplet(result, Nucleotide::C, Nucleotide::G, Nucleotide::A);
+    addTriplet(result, Nucleotide::C, Nucleotide::G, Nucleotide::G);
+    addTriplet(result, Nucleotide::A, Nucleotide::G, Nucleotide::A);
+    addTriplet(result, Nucleotide::A, Nucleotide::G, Nucleotide::G);
+    break;
+  case AminoAcid::AA_S:
+    addTriplet(result, Nucleotide::T, Nucleotide::C, Nucleotide::T);
+    addTriplet(result, Nucleotide::T, Nucleotide::C, Nucleotide::C);
+    addTriplet(result, Nucleotide::T, Nucleotide::C, Nucleotide::A);
+    addTriplet(result, Nucleotide::T, Nucleotide::C, Nucleotide::G);
+    addTriplet(result, Nucleotide::A, Nucleotide::G, Nucleotide::T);
+    addTriplet(result, Nucleotide::A, Nucleotide::G, Nucleotide::C);
+    break;
+  case AminoAcid::AA_T:
+    addTriplet(result, Nucleotide::A, Nucleotide::C, Nucleotide::T);
+    addTriplet(result, Nucleotide::A, Nucleotide::C, Nucleotide::C);
+    addTriplet(result, Nucleotide::A, Nucleotide::C, Nucleotide::A);
+    addTriplet(result, Nucleotide::A, Nucleotide::C, Nucleotide::G);
+    break;
+  case AminoAcid::AA_V:
+    addTriplet(result, Nucleotide::G, Nucleotide::T, Nucleotide::T);
+    addTriplet(result, Nucleotide::G, Nucleotide::T, Nucleotide::C);
+    addTriplet(result, Nucleotide::G, Nucleotide::T, Nucleotide::A);
+    addTriplet(result, Nucleotide::G, Nucleotide::T, Nucleotide::G);
+    break;
+  case AminoAcid::AA_W:
+    addTriplet(result, Nucleotide::T, Nucleotide::G, Nucleotide::G);
+    break;
+  case AminoAcid::AA_Y:
+    addTriplet(result, Nucleotide::T, Nucleotide::A, Nucleotide::T);
+    addTriplet(result, Nucleotide::T, Nucleotide::A, Nucleotide::C);
+    break;
+  case AminoAcid::AA_STP:
+    addTriplet(result, Nucleotide::T, Nucleotide::A, Nucleotide::A);
+    addTriplet(result, Nucleotide::T, Nucleotide::A, Nucleotide::G);
+    addTriplet(result, Nucleotide::T, Nucleotide::G, Nucleotide::A);
+    break;
+  case AminoAcid::AA_GAP:
+  case AminoAcid::AA_Z:
+  case AminoAcid::AA_U:
+  case AminoAcid::AA_B:
+  case AminoAcid::AA_X:
+  default:
+    break;
+  }
+
+  return result;
+}
+
 };
