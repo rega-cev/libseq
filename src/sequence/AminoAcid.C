@@ -76,7 +76,8 @@ AminoAcid::AminoAcid(char c)
   case 'X': rep_ = AA_X; break;
   default:
     throw ParseException
-      (std::string("Invalid amino acid character: '") + c + "'");
+      (std::string(),
+       std::string("Invalid amino acid character: '") + c + "'", false);
   }
 }
 

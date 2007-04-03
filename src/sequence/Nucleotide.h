@@ -188,7 +188,8 @@ inline Nucleotide::Nucleotide(char c)
   case '-': rep_ = NT_GAP; break;
   default:
     throw ParseException
-      (std::string("Invalid nucleotide character: '") + c + "'");
+      (std::string(),
+       std::string("Invalid nucleotide character: '") + c + "'", false);
   }
 }
 

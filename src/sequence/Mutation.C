@@ -19,32 +19,34 @@ std::set<AAMutation> readMutations(std::istream& mutationFile,
     std::string mutation = *i;
 
     if (mutation.length() < prefix.length() + 2)
-      throw ParseException("Error while parsing mutation '"
+      throw ParseException("", "Error while parsing mutation '"
 			   + mutation + "': too short for mutation with "
-			   "prefix '" + prefix + "'");
+			   "prefix '" + prefix + "'", false);
 
     if (mutation.substr(0, prefix.length()) != prefix)
-      throw ParseException("Error while parsing mutation '"
+      throw ParseException("", "Error while parsing mutation '"
 			   + mutation + "': expected to start with '"
-			   + prefix + "'");
+			   + prefix + "'", false);
 
     try {
       AminoAcid aa(mutation[mutation.length() - 1]);
 
       char *endptr;
+
+      std::string posStr = mutation.substr(prefix.length(),
+					   mutation.length()
+					   - prefix.length() - 1);
+
       int pos
-	= strtol(mutation.substr(prefix.length(),
-				 mutation.length()
-				 - prefix.length() - 1).c_str(),
-		 &endptr, 10);
+	= strtol(posStr.c_str(), &endptr, 10);
 
       if (*endptr != 0)
-	throw ParseException("could not parse position");
+	throw ParseException("", "could not parse position", false);
 
       result.insert(AAMutation(pos, aa));
     } catch (ParseException& e) {
-      throw ParseException("Error while parsing mutation '"
-			   + mutation + "': " + e.message());
+      throw ParseException("", "Error while parsing mutation '"
+			   + mutation + "': " + e.message(), false);
     }
 
   }

@@ -20,16 +20,30 @@ namespace seq {
 class ParseException
 {
 public:
-  ParseException(const std::string message)
-    : message_(message) { }
+  ParseException(const std::string name,
+		 const std::string message, bool recovered)
+    : name_(name), message_(message), recovered_(recovered) { }
+
+  /**
+   * The sequence name.
+   */
+  std::string name() const { return name_; }
 
   /**
    * The message describing the error.
    */
   std::string message() const { return message_; }
 
+  /**
+   * Whether the parser attempted to recover and you could try parsing
+   * the next sequence.
+   */
+  bool recovered() const { return recovered_; }
+
 private:
+  std::string name_;
   std::string message_;
+  bool recovered_;
 };
 
 };

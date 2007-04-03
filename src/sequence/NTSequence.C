@@ -29,7 +29,7 @@ NTSequence::NTSequence(const std::string name, const std::string description,
 
       (*this)[i] = nt;
     } catch (ParseException& e) {
-      throw ParseException("Sequence '" + name + "': " + e.message());
+      throw ParseException(name, e.message(), e.recovered());
     }
   }
 }
@@ -103,8 +103,9 @@ void readFastaEntry(std::istream& i,
     i.getline(c, 511);
     if (i) {
       if (c[0] != '>') {
-	throw ParseException(std::string("FASTA file expected '>', got: '")
-			     + c[0] + "'");
+	throw ParseException(std::string(),
+			     std::string("FASTA file expected '>', got: '")
+			     + c[0] + "'", false);
       }
 
       std::string nameDesc = c + 1;
@@ -121,10 +122,19 @@ void readFastaEntry(std::istream& i,
 	      || (ch == '-') || (ch == '*')) {
 	    sequence += ch;
 	  } else {
+	    char failedCh = ch;
+	    /*
+	     * Wind further to the next possible sequence.
+	     */
+	    for (ch = i.get(); (ch != EOF) && (ch != '>'); ch = i.get())
+	      ;
+
+	    if (ch == '>')
+	      i.putback(ch);
+
 	    throw ParseException
-	      (std::string("Illegal character in FASTA, sequence '")
-	       + "'" + name + "': '"
-	       + (char)ch + "'");
+	      (name, std::string("Illegal character in FASTA: '")
+	       + (char)failedCh + "'", true);
 	  }
 	}
 
