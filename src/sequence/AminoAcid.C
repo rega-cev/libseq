@@ -44,7 +44,7 @@ AminoAcid::AminoAcid()
   : rep_(AA_Z)
 { }
 
-AminoAcid::AminoAcid(char c)
+AminoAcid::AminoAcid(char c, std::set<AminoAcid>* ambiguities)
   throw (ParseException)
 {
   switch (toupper(c)) {
@@ -79,6 +79,8 @@ AminoAcid::AminoAcid(char c)
       (std::string(),
        std::string("Invalid amino acid character: '") + c + "'", false);
   }
+
+  ambiguities_ = ambiguities;
 }
 
 std::string AminoAcid::tla() const

@@ -4,6 +4,7 @@
 
 #include <assert.h>
 #include <iostream>
+#include <set>
 
 #include "ParseException.h"
 
@@ -98,7 +99,7 @@ public:
    *
    * \sa toChar()
    */
-  AminoAcid(char c)
+  AminoAcid(char c, std::set<AminoAcid>* ambiguities = 0)
     throw (ParseException);
 
   /**
@@ -161,6 +162,13 @@ public:
    */
   bool operator< (const AminoAcid other) const { return rep_ < other.rep_; }
 
+  /**
+   * Return the possible ambiguities.
+   */
+  std::set<AminoAcid>* ambiguities() const {
+    return ambiguities_;
+  }
+
 private:
   static const char AA_CHAR[];
   static const char * const AA_TLA[];
@@ -170,6 +178,7 @@ private:
   }
 
   short int rep_;
+  std::set<AminoAcid>* ambiguities_;
 };
 
 /**

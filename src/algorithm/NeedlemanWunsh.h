@@ -56,6 +56,11 @@ private:
   double needlemanWunshAlign(std::vector<Symbol>& seq1,
 			     std::vector<Symbol>& seq2,
 			     double** weigthMatrix);
+
+  int getSubstitutionScore(const Nucleotide n1, const Nucleotide n2,
+			   double** weightMatrix);
+  int getSubstitutionScore(const AminoAcid a1, const AminoAcid a2,
+			   double** weightMatrix);
 };
 
 }

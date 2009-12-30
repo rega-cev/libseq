@@ -83,7 +83,7 @@ double NeedlemanWunsh::needlemanWunshAlign(std::vector<Symbol>& seq1,
 
       double sextend
 	= dnTable[i-1][j-1]
-	+ weightMatrix[seq1[i-1].intRep()][seq2[j-1].intRep()];
+	+ getSubstitutionScore(seq1[i-1], seq2[j-1], weightMatrix);
 
       double ges = (j == seq2Size) ? edgeGapExtensionScore : gapExtensionScore_;
 
@@ -196,6 +196,42 @@ double NeedlemanWunsh::computeAlignScore(const NTSequence& seq1,
   score += seq2GapLength * edgeGapExtensionScore;
 
   return score;
+}
+
+int NeedlemanWunsh::getSubstitutionScore(const Nucleotide n1, 
+					 const Nucleotide n2,
+					 double** weightMatrix)
+{
+  return weightMatrix[n1.intRep()][n2.intRep()];
+}
+
+int NeedlemanWunsh::getSubstitutionScore(const AminoAcid a1, 
+					 const AminoAcid a2,
+					 double** weightMatrix)
+{
+  if(!a1.ambiguities() && !a2.ambiguities()) {
+    return weightMatrix[a1.intRep()][a2.intRep()];
+  }
+
+  std::set<AminoAcid>* amb1 = a1.ambiguities();
+  if (!amb1) {
+    amb1 = new std::set<AminoAcid>();
+    amb1->insert(a1);
+  }
+  std::set<AminoAcid>* amb2 = a2.ambiguities();
+  if (!amb2) {
+    amb2 = new std::set<AminoAcid>();
+    amb2->insert(a2);
+  }
+
+  std::set<AminoAcid>::iterator it1;
+  std::set<AminoAcid>::iterator it2;
+  for(it1 = amb1->begin(); it1 != amb1->end(); ++it1) 
+    for(it2 = amb2->begin(); it2 != amb2->end(); ++it2)
+      if( *it1 == *it2 )
+	return 0;
+
+  return -3;
 }
 
 }
