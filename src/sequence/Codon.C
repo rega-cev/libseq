@@ -4,6 +4,7 @@ namespace seq {
 
 AminoAcid Codon::translate(const NTSequence::const_iterator triplet)
 {
+  //TODO why not static???
   const AminoAcid codonTable[4][4][4] = {
   { { AminoAcid::K /* AAA */,
       AminoAcid::N /* AAC */,
