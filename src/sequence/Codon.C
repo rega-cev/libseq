@@ -98,8 +98,19 @@ AminoAcid Codon::translate(const NTSequence::const_iterator triplet)
 
   if (triplet->isAmbiguity()
       || (triplet + 1)->isAmbiguity()
-      || (triplet + 2)->isAmbiguity())
-    return AminoAcid::X;
+      || (triplet + 2)->isAmbiguity()) {
+    std::set<AminoAcid>* ambiguities = new std::set<AminoAcid>();
+
+    NTSequence s(triplet, triplet + 3);
+
+    std::vector<NTSequence> possibilities;
+    s.nonAmbiguousSequences(possibilities);
+    
+    for (unsigned i = 0; i < possibilities.size(); ++i)
+      ambiguities->insert(translate(possibilities[i].begin()));
+    return AminoAcid('X', ambiguities);
+  }
+    
 
   return
     codonTable[triplet->intRep()]
