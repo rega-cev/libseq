@@ -2,7 +2,8 @@ SET(SOURCES
   sequence/Nucleotide.C sequence/AminoAcid.C sequence/NTSequence.C
   sequence/AASequence.C sequence/Codon.C sequence/Mutation.C
   sequence/CodingSequence.C evolution/NucleotideSubstitutionModel.C
-  algorithm/Align.C
+  algorithm/AlignmentAlgorithm.C algorithm/CodonAlign.C 
+  algorithm/NeedlemanWunsh.C
 )  
 
 #ADD_LIBRARY(seq SHARED ${SOURCES})
