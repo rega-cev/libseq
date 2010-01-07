@@ -56,6 +56,13 @@ private:
   double needlemanWunshAlign(std::vector<Symbol>& seq1,
 			     std::vector<Symbol>& seq2,
 			     double** weigthMatrix);
+
+  int getScore(Nucleotide n1, Nucleotide n2){
+	  return AlignmentAlgorithm::IUB()[n1.intRep()][n2.intRep()];
+  }
+
+  int getScore(AminoAcid a1, AminoAcid a2);
+
 };
 
 }

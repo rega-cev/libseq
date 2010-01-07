@@ -1,10 +1,11 @@
 #include "Codon.h"
+#include "AmbiguousTable.h"
 
 namespace seq {
 
 AminoAcid Codon::translate(const NTSequence::const_iterator triplet)
 {
-  const AminoAcid codonTable[4][4][4] = {
+  const static AminoAcid codonTable[4][4][4] = {
   { { AminoAcid::K /* AAA */,
       AminoAcid::N /* AAC */,
       AminoAcid::K /* AAG */,
@@ -90,6 +91,8 @@ AminoAcid Codon::translate(const NTSequence::const_iterator triplet)
     }
   } };
 
+  static AmbiguousTable ambTable;
+
   if (*triplet == Nucleotide::GAP
       && (*(triplet + 1) == Nucleotide::GAP)
       && (*(triplet + 2) == Nucleotide::GAP))
@@ -98,7 +101,9 @@ AminoAcid Codon::translate(const NTSequence::const_iterator triplet)
   if (triplet->isAmbiguity()
       || (triplet + 1)->isAmbiguity()
       || (triplet + 2)->isAmbiguity())
-    return AminoAcid::X;
+  {
+	  return AminoAcid::getAmbiguousAminoAcid(ambTable.getIndex(translateAll(triplet)));
+  }
 
   return
     codonTable[triplet->intRep()]

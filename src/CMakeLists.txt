@@ -1,8 +1,15 @@
 SET(SOURCES
-  sequence/Nucleotide.C sequence/AminoAcid.C sequence/NTSequence.C
-  sequence/AASequence.C sequence/Codon.C sequence/Mutation.C
-  sequence/CodingSequence.C evolution/NucleotideSubstitutionModel.C
-  algorithm/AlignmentAlgorithm.C algorithm/CodonAlign.C 
+  sequence/Nucleotide.C
+  sequence/AminoAcid.C  
+  sequence/AmbiguousTable.C
+  sequence/NTSequence.C
+  sequence/AASequence.C
+  sequence/Codon.C
+  sequence/Mutation.C
+  sequence/CodingSequence.C
+  evolution/NucleotideSubstitutionModel.C
+  algorithm/AlignmentAlgorithm.C
+  algorithm/CodonAlign.C 
   algorithm/NeedlemanWunsh.C
 )  
 

@@ -114,6 +114,9 @@ public:
     return AminoAcid(rep);
   }
 
+  static AminoAcid getAmbiguousAminoAcid(int ambIndex){
+	  return AminoAcid('X',ambIndex);
+  }
   /**
    * Get the uppercase character representation for this amino acid.
    *
@@ -142,6 +145,11 @@ public:
     return rep_;
   }
 
+  short int getAmbiguityIndex() const {
+	  assert(rep_ < AA_GAP);
+	  return ambiguityIndex_;
+  }
+
   /**
    * Are two amino acids identical ?
    */
@@ -161,15 +169,18 @@ public:
    */
   bool operator< (const AminoAcid other) const { return rep_ < other.rep_; }
 
+
+
 private:
   static const char AA_CHAR[];
   static const char * const AA_TLA[];
 
-  explicit AminoAcid(int rep)
-    : rep_(rep) {
+  explicit AminoAcid(int rep, int index = -1)
+      : rep_(rep), ambiguityIndex_(index) {
   }
 
   short int rep_;
+  short int ambiguityIndex_;
 };
 
 /**
