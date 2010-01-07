@@ -49,6 +49,8 @@ class AlignmentAlgorithm {
      * From: ftp://ftp.ncbi.nih.gov/blast/matrices/BLOSUM30
      */
     static double** BLOSUM30();
+
+    static double** AmbiguousSubMat();
   };
 
 }
