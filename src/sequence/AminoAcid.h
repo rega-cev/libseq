@@ -115,7 +115,7 @@ public:
   }
 
   static AminoAcid getAmbiguousAminoAcid(int ambIndex){
-	  return AminoAcid('X',ambIndex);
+	  return AminoAcid(AA_X,ambIndex);
   }
   /**
    * Get the uppercase character representation for this amino acid.
@@ -146,7 +146,7 @@ public:
   }
 
   short int getAmbiguityIndex() const {
-	  assert(rep_ < AA_GAP);
+	  assert(rep_ < AA_GAP || rep_ == AA_X);
 	  return ambiguityIndex_;
   }
 
