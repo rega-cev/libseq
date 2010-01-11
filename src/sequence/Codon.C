@@ -98,11 +98,16 @@ AminoAcid Codon::translate(const NTSequence::const_iterator triplet)
       && (*(triplet + 2) == Nucleotide::GAP))
     return AminoAcid::GAP;
 
+
   if (triplet->isAmbiguity()
       || (triplet + 1)->isAmbiguity()
       || (triplet + 2)->isAmbiguity())
   {
-	  return AminoAcid::getAmbiguousAminoAcid(ambTable.getIndex(translateAll(triplet)));
+	  std::set<AminoAcid> all = translateAll(triplet);
+	  if(all.size() == 1){
+		  return *all.begin();
+	  }
+	  return AminoAcid::getAmbiguousAminoAcid(ambTable.getIndex(all));
   }
 
   return
