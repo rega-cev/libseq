@@ -38,7 +38,7 @@ const AminoAcid AminoAcid::GAP(AminoAcid::AA_GAP);
 const AminoAcid AminoAcid::Z(AminoAcid::AA_Z);
 const AminoAcid AminoAcid::U(AminoAcid::AA_U);
 const AminoAcid AminoAcid::B(AminoAcid::AA_B);
-const AminoAcid AminoAcid::X(AminoAcid::AA_X);
+const AminoAcid AminoAcid::X(AminoAcid::AA_X,1);
 
 AminoAcid::AminoAcid()
   : rep_(AA_Z)
