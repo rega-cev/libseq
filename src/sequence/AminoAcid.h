@@ -47,10 +47,7 @@ public:
   static const int AA_Y = 19;
   static const int AA_STP = 20; // translation stop
   static const int AA_GAP = 21;
-  static const int AA_Z = 22;   // glutamate (E) or glutamine (Q)
-  static const int AA_U = 23;   // selenocysteine
-  static const int AA_B = 24;   // asparatate (D) or asparagine (N)
-  static const int AA_X = 25;   // any
+  static const int AA_X = 840;
   //@}
 
   /**
@@ -79,11 +76,6 @@ public:
   static const AminoAcid Y;
   static const AminoAcid STP;
   static const AminoAcid GAP;
-
-  /* less common amino acids: */
-  static const AminoAcid Z;
-  static const AminoAcid U;
-  static const AminoAcid B;
   static const AminoAcid X;
   //@}
 
@@ -110,20 +102,16 @@ public:
    */
   static AminoAcid fromRep(int rep) {
     assert(rep >= 0 && rep <= AA_X);
-
     return AminoAcid(rep);
   }
 
-  static AminoAcid getAmbiguousAminoAcid(int ambIndex){
-	  return AminoAcid(AA_X,ambIndex);
-  }
   /**
    * Get the uppercase character representation for this amino acid.
    *
    * \sa AminoAcid(char)
    */
   char toChar() const {
-    return AA_CHAR[rep_];
+	return rep_ > AA_GAP ? 'X' : AA_CHAR[rep_];
   }
 
   /**
@@ -145,11 +133,6 @@ public:
     return rep_;
   }
 
-  short int getAmbiguityIndex() const {
-	  assert(rep_ < AA_GAP || rep_ == AA_X);
-	  return ambiguityIndex_;
-  }
-
   /**
    * Are two amino acids identical ?
    */
@@ -169,18 +152,15 @@ public:
    */
   bool operator< (const AminoAcid other) const { return rep_ < other.rep_; }
 
-
-
 private:
   static const char AA_CHAR[];
   static const char * const AA_TLA[];
 
-  explicit AminoAcid(int rep, int index = -1)
-      : rep_(rep), ambiguityIndex_(index) {
+  explicit AminoAcid(int rep)
+          : rep_(rep) {
   }
 
   short int rep_;
-  short int ambiguityIndex_;
 };
 
 /**

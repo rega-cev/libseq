@@ -107,7 +107,7 @@ AminoAcid Codon::translate(const NTSequence::const_iterator triplet)
 	  if(all.size() == 1){
 		  return *all.begin();
 	  }
-	  return AminoAcid::getAmbiguousAminoAcid(ambTable.getIndex(all));
+	  return AminoAcid::fromRep(ambTable.getIndex(all));
   }
 
   return
@@ -258,14 +258,10 @@ std::set<NTSequence> Codon::codonsFor(AminoAcid a)
     addTriplet(result, Nucleotide::T, Nucleotide::G, Nucleotide::A);
     break;
   case AminoAcid::AA_GAP:
-  case AminoAcid::AA_Z:
-  case AminoAcid::AA_U:
-  case AminoAcid::AA_B:
   case AminoAcid::AA_X:
   default:
     break;
   }
-
   return result;
 }
 

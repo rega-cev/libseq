@@ -82,7 +82,7 @@ double NeedlemanWunsh::needlemanWunshAlign(std::vector<Symbol>& seq1,
     for (unsigned j = 1; j < seq2Size+1; ++j) {
 
       double sextend
-	= dnTable[i-1][j-1]	+ getScore(seq1[i-1],seq2[j-1]);
+	= dnTable[i-1][j-1]	+ weightMatrix[seq1[i-1].intRep()][seq2[j-1].intRep()];
 
       double ges = (j == seq2Size) ? edgeGapExtensionScore : gapExtensionScore_;
 
@@ -195,16 +195,6 @@ double NeedlemanWunsh::computeAlignScore(const NTSequence& seq1,
   score += seq2GapLength * edgeGapExtensionScore;
 
   return score;
-}
-
-
-
-int NeedlemanWunsh::getScore(AminoAcid a1, AminoAcid a2){
-	if(a1 == AminoAcid::X || a2 == AminoAcid::X){
-		return AlignmentAlgorithm::AmbiguousSubMat()[a1.getAmbiguityIndex()][a2.getAmbiguityIndex()];
-	} else {
-		return AlignmentAlgorithm::BLOSUM30()[a1.intRep()][a2.intRep()];
-	}
 }
 
 }

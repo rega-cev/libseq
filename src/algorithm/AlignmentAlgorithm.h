@@ -44,13 +44,13 @@ class AlignmentAlgorithm {
      * Similarity weights matrix for amino acids.
      *
      * This is from the famous BLOSUM series of weight matrices, the one
-     * that is the default use by ClustalX.
+     * that is the default use by ClustalX. Additionally this matrix
+     * contains scores for sets of amino acids.
      *
      * From: ftp://ftp.ncbi.nih.gov/blast/matrices/BLOSUM30
      */
-    static double** BLOSUM30();
-
     static double** AmbiguousSubMat();
+
   };
 
 }

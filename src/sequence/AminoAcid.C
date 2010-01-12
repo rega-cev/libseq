@@ -6,42 +6,39 @@ namespace seq {
 const char AminoAcid::AA_CHAR[]
 = { 'A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K',
     'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V',
-    'W', 'Y', '*', '-', 'Z', 'U', 'B', 'X' };
+    'W', 'Y', '*', '-', 'X' };
 
 const char * const AminoAcid::AA_TLA[]
 = { "Ala", "Cys", "Asp", "Glu", "Phe", "Gly", "His", "Ile", "Lys",
     "Leu", "Met", "Asn", "Pro", "Gln", "Arg", "Ser", "Thr", "Val",
-    "Trp", "Tyr", "STP", "GAP", "Glu/Gln", "Sec", "Asp/Asn", "Any" };
+    "Trp", "Tyr", "STP", "GAP", "Any" };
 
-const AminoAcid AminoAcid::A(AminoAcid::AA_A,320);
-const AminoAcid AminoAcid::C(AminoAcid::AA_C,472);
-const AminoAcid AminoAcid::D(AminoAcid::AA_D,539);
-const AminoAcid AminoAcid::E(AminoAcid::AA_E,583);
-const AminoAcid AminoAcid::F(AminoAcid::AA_F,607);
-const AminoAcid AminoAcid::G(AminoAcid::AA_G,633);
-const AminoAcid AminoAcid::H(AminoAcid::AA_H,655);
-const AminoAcid AminoAcid::I(AminoAcid::AA_I,695);
-const AminoAcid AminoAcid::K(AminoAcid::AA_K,757);
-const AminoAcid AminoAcid::L(AminoAcid::AA_L,777);
-const AminoAcid AminoAcid::M(AminoAcid::AA_M,802);
-const AminoAcid AminoAcid::N(AminoAcid::AA_N,807);
-const AminoAcid AminoAcid::P(AminoAcid::AA_P,813);
-const AminoAcid AminoAcid::Q(AminoAcid::AA_Q,824);
-const AminoAcid AminoAcid::R(AminoAcid::AA_R,826);
-const AminoAcid AminoAcid::S(AminoAcid::AA_S,832);
-const AminoAcid AminoAcid::T(AminoAcid::AA_T,836);
-const AminoAcid AminoAcid::V(AminoAcid::AA_V,837);
-const AminoAcid AminoAcid::W(AminoAcid::AA_W,838);
-const AminoAcid AminoAcid::Y(AminoAcid::AA_Y,839);
-const AminoAcid AminoAcid::STP(AminoAcid::AA_STP,0);
+const AminoAcid AminoAcid::A(AminoAcid::AA_A);
+const AminoAcid AminoAcid::C(AminoAcid::AA_C);
+const AminoAcid AminoAcid::D(AminoAcid::AA_D);
+const AminoAcid AminoAcid::E(AminoAcid::AA_E);
+const AminoAcid AminoAcid::F(AminoAcid::AA_F);
+const AminoAcid AminoAcid::G(AminoAcid::AA_G);
+const AminoAcid AminoAcid::H(AminoAcid::AA_H);
+const AminoAcid AminoAcid::I(AminoAcid::AA_I);
+const AminoAcid AminoAcid::K(AminoAcid::AA_K);
+const AminoAcid AminoAcid::L(AminoAcid::AA_L);
+const AminoAcid AminoAcid::M(AminoAcid::AA_M);
+const AminoAcid AminoAcid::N(AminoAcid::AA_N);
+const AminoAcid AminoAcid::P(AminoAcid::AA_P);
+const AminoAcid AminoAcid::Q(AminoAcid::AA_Q);
+const AminoAcid AminoAcid::R(AminoAcid::AA_R);
+const AminoAcid AminoAcid::S(AminoAcid::AA_S);
+const AminoAcid AminoAcid::T(AminoAcid::AA_T);
+const AminoAcid AminoAcid::V(AminoAcid::AA_V);
+const AminoAcid AminoAcid::W(AminoAcid::AA_W);
+const AminoAcid AminoAcid::Y(AminoAcid::AA_Y);
+const AminoAcid AminoAcid::STP(AminoAcid::AA_STP);
 const AminoAcid AminoAcid::GAP(AminoAcid::AA_GAP);
-const AminoAcid AminoAcid::Z(AminoAcid::AA_Z);
-const AminoAcid AminoAcid::U(AminoAcid::AA_U);
-const AminoAcid AminoAcid::B(AminoAcid::AA_B);
-const AminoAcid AminoAcid::X(AminoAcid::AA_X,1);
+const AminoAcid AminoAcid::X(AminoAcid::AA_X);
 
 AminoAcid::AminoAcid()
-  : rep_(AA_Z)
+  : rep_(AA_X)
 { }
 
 AminoAcid::AminoAcid(char c)
@@ -70,9 +67,6 @@ AminoAcid::AminoAcid(char c)
   case 'Y': rep_ = AA_Y; break;
   case '*': rep_ = AA_STP; break;
   case '-': rep_ = AA_GAP; break;
-  case 'Z': rep_ = AA_Z; break;
-  case 'U': rep_ = AA_U; break;
-  case 'B': rep_ = AA_B; break;
   case 'X': rep_ = AA_X; break;
   default:
     throw ParseException
@@ -83,7 +77,7 @@ AminoAcid::AminoAcid(char c)
 
 std::string AminoAcid::tla() const
 {
-  return AA_TLA[rep_];
+  return rep_ > AA_GAP ? "Any" : AA_TLA[rep_];
 }
 
 std::ostream& operator<< (std::ostream& s, const AminoAcid aa)
