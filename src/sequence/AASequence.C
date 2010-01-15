@@ -49,7 +49,12 @@ AASequence AASequence::translate(const NTSequence::const_iterator begin,
   AASequence result(size / 3);
 
   for (NTSequence::const_iterator i = begin; i < end; i += 3) {
-    result[(i - begin)/3] = Codon::translate(i);
+    std::set<AminoAcid> possibilities = Codon::translateAll(i);
+    if(possibilities.size() > 1){
+      result[(i - begin)/3] = AminoAcid::X;
+    } else {
+      result[(i - begin)/3] = *possibilities.begin();
+    }
   }
 
   return result;
