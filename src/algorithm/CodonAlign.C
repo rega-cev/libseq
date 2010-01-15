@@ -78,6 +78,14 @@ CodonAlign::align(NTSequence& ref, NTSequence& target, int maxFrameShifts)
    */
   AASequence refAA = AASequence::translate(ref);
 
+  NTSequence refNTAligned = ref;
+  NTSequence targetNTAligned = target;
+  double ntScore = algorithm_->align(refNTAligned, targetNTAligned);
+
+  if(ntScore < 200){
+	return std::make_pair(ntScore,0);
+  }
+
   int bestFrameShift = -1;
   double bestScore = -1E10;
   AASequence bestRefAA;
@@ -108,9 +116,6 @@ CodonAlign::align(NTSequence& ref, NTSequence& target, int maxFrameShifts)
 				    bestRefAA,
 				    bestTargetAA);
 
-  NTSequence refNTAligned = ref;
-  NTSequence targetNTAligned = target;
-  double ntScore = algorithm_->align(refNTAligned, targetNTAligned);
 
   if (ntScore - ntCodonScore > 100) {
     /*
