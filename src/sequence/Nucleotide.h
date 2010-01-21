@@ -27,22 +27,22 @@ public:
    * \sa intRep() and fromRep(int).
    */
   //@{
-  static const int NT_A = 0;
-  static const int NT_C = 1;
-  static const int NT_G = 2;
-  static const int NT_T = 3;
-  static const int NT_M = 4;
+  static const int NT_A = 1;
+  static const int NT_C = 2;
+  static const int NT_G = 4;
+  static const int NT_T = 8;
+  static const int NT_M = 3;
   static const int NT_R = 5;
-  static const int NT_W = 6;
-  static const int NT_S = 7;
-  static const int NT_Y = 8;
-  static const int NT_K = 9;
-  static const int NT_V = 10;
+  static const int NT_W = 9;
+  static const int NT_S = 6;
+  static const int NT_Y = 10;
+  static const int NT_K = 12;
+  static const int NT_V = 7;
   static const int NT_H = 11;
-  static const int NT_D = 12;
-  static const int NT_B = 13;
-  static const int NT_N = 14;
-  static const int NT_GAP = 15;
+  static const int NT_D = 13;
+  static const int NT_B = 14;
+  static const int NT_N = 15;
+  static const int NT_GAP = 0;
   //@}
 
   /**
@@ -89,7 +89,7 @@ public:
    * \sa intRep()
    */
   static Nucleotide fromRep(int rep) {
-    assert(rep >= 0 && rep <= NT_GAP);
+    assert(rep >= 0 && rep <= NT_N);
 
     return Nucleotide(rep);
   }
