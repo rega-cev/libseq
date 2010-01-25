@@ -30,10 +30,7 @@ int sampleUniform(int one, int two, int three, int four)
 
 namespace seq {
 
-const char Nucleotide::NT_CHAR[] = {'A', 'C', 'G', 'T',
-				    'M', 'R', 'W', 'S',
-				    'Y', 'K', 'V', 'H',
-				    'D', 'B', 'N', '-' };
+const char Nucleotide::NT_CHAR[] = {'-', 'A', 'C', 'M', 'G', 'R', 'S', 'V', 'T', 'W', 'Y', 'H', 'K', 'D', 'B', 'N' };
 
 const Nucleotide Nucleotide::A(Nucleotide::NT_A);
 const Nucleotide Nucleotide::C(Nucleotide::NT_C);
