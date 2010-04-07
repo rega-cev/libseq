@@ -1,4 +1,4 @@
-#include "Align.h"
+#include "NeedlemanWunsh.h"
 
 #include <fstream>
 
@@ -14,7 +14,8 @@ int main(int argc, char **argv)
   s2 >> seq2;
   std::cerr << seq1 << std::endl;
   std::cerr << seq2 << std::endl;
-  double result = Align(seq1, seq2);
+  NeedlemanWunsh needlemanWunsh(-10, -3.3);
+  double result = needlemanWunsh.align(seq1, seq2);
   std::cerr << std::endl;
   std::cerr << seq1 << std::endl;
   std::cerr << seq2 << std::endl;

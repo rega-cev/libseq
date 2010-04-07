@@ -1,6 +1,8 @@
-#include "Align.h"
-
 #include <fstream>
+
+#include "CodonAlign.h"
+#include "NeedlemanWunsh.h"
+#include "AlignmentAlgorithm.h"
 
 using namespace seq;
 
@@ -14,7 +16,12 @@ int main(int argc, char **argv)
   s2 >> seq2;
 
   try {
-    std::pair<double, int> result = CodonAlign(seq1, seq2, 2);
+    AlignmentAlgorithm* needlemanWunsh = new NeedlemanWunsh(-10, -3.3);
+
+    CodonAlign codonAlign(needlemanWunsh);
+    std::pair<double, int> result = 
+      codonAlign.align(seq1, seq2);
+
     std::cerr << "Aligned successfully, score: " << result.first
 	      << ", frameshifts: " << result.second << std::endl;
 
