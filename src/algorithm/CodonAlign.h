@@ -85,6 +85,7 @@ private:
   double alignLikeAA(NTSequence& seq1, NTSequence& seq2, 
 		     int ORF, 
 		     const AASequence& seqAA1, const AASequence& seqAA2);
+  bool noGapAt(const NTSequence& seq, unsigned int i) const;
 
   AlignmentAlgorithm* algorithm_;
 };

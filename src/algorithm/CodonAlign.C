@@ -23,14 +23,14 @@ double CodonAlign::alignLikeAA(NTSequence& seq1,
   int lastNonGap = -1;
 
   for (unsigned i = 0; i < seqAA1.size(); ++i) {
-    if (seqAA1[i] == AminoAcid::GAP) {
+    if (seqAA1[i] == AminoAcid::GAP && noGapAt(seq1, i)) {
       if (i*3 < seq1.size())
 	seq1.insert(seq1.begin() + (i*3), 3, Nucleotide::GAP);
       else
 	seq1.insert(seq1.end(), 3, Nucleotide::GAP);
     }
 
-    if (seqAA2[i] == AminoAcid::GAP) {
+    if (seqAA2[i] == AminoAcid::GAP && noGapAt(seq2, i)) {
       if (i*3 < seq2.size())
 	seq2.insert(seq2.begin() + (i*3), 3, Nucleotide::GAP);
       else
@@ -51,6 +51,16 @@ double CodonAlign::alignLikeAA(NTSequence& seq1,
       seq2[lastNonGap + i] = seq2ORFEnd[i];
 
   return algorithm_->computeAlignScore(seq1, seq2);
+}
+
+bool CodonAlign::noGapAt(const NTSequence& seq, unsigned int i) const
+{
+  if((i * 3) == seq.size())
+    return true;
+  else
+    return seq[i * 3] != Nucleotide::GAP
+        && seq[(i * 3) + 1] != Nucleotide::GAP
+        && seq[(i * 3) + 2] != Nucleotide::GAP;
 }
 
 bool CodonAlign::haveGaps(const NTSequence& seq, int from, int to)
@@ -229,6 +239,14 @@ CodonAlign::align(NTSequence& ref, NTSequence& target, int maxFrameShifts)
   } else {
     ref = refCodonAligned;
     target = targetCodonAligned;
+
+    std::cerr << "Scores: " << ntScore << " " << ntCodonScore << " " << bestScore << std::endl;
+    std::cerr << refNTAligned.asString() << std::endl;
+    std::cerr << targetNTAligned.asString() << std::endl;
+    std::cerr << refCodonAligned.asString() << std::endl;
+    std::cerr << targetCodonAligned.asString() << std::endl;
+    std::cerr << bestRefAA.asString() << std::endl;
+    std::cerr << bestTargetAA.asString() << std::endl;
 
     return std::make_pair(ntCodonScore, 0);
   }
