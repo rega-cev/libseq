@@ -40,6 +40,11 @@ std::string AASequence::asString() const
   return result;
 }
 
+inline bool contains(const std::set<AminoAcid>& possibilities, const AminoAcid& aa)
+{
+  return possibilities.find(aa) != possibilities.end();
+}
+
 AASequence AASequence::translate(const NTSequence::const_iterator begin,
 				 const NTSequence::const_iterator end)
 {
@@ -50,8 +55,17 @@ AASequence AASequence::translate(const NTSequence::const_iterator begin,
 
   for (NTSequence::const_iterator i = begin; i < end; i += 3) {
     std::set<AminoAcid> possibilities = Codon::translateAll(i);
-    if(possibilities.size() > 1){
+    if (possibilities.size() > 2) {
       result[(i - begin)/3] = AminoAcid::X;
+    } else if (possibilities.size() == 2) {
+      if (contains(possibilities,AminoAcid::D) && contains(possibilities,AminoAcid::N))
+        result[(i - begin)/3] = AminoAcid::B;
+      else if (contains(possibilities,AminoAcid::E) && contains(possibilities,AminoAcid::Q))
+        result[(i - begin)/3] = AminoAcid::Z;
+      else if (contains(possibilities,AminoAcid::L) && contains(possibilities,AminoAcid::I))
+        result[(i - begin)/3] = AminoAcid::J;
+      else
+        result[(i - begin)/3] = AminoAcid::X;
     } else {
       result[(i - begin)/3] = *possibilities.begin();
     }
