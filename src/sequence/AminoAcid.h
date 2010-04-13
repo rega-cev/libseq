@@ -51,6 +51,7 @@ public:
   static const int AA_U = 23;   // selenocysteine
   static const int AA_B = 24;   // asparatate (D) or asparagine (N)
   static const int AA_X = 25;   // any
+  static const int AA_J = 26;   // leucine (L) or isoleucine (I)
   //@}
 
   /**
@@ -85,6 +86,7 @@ public:
   static const AminoAcid U;
   static const AminoAcid B;
   static const AminoAcid X;
+  static const AminoAcid J;
   //@}
 
   /**

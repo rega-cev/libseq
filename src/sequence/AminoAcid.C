@@ -6,12 +6,13 @@ namespace seq {
 const char AminoAcid::AA_CHAR[]
 = { 'A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K',
     'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V',
-    'W', 'Y', '*', '-', 'Z', 'U', 'B', 'X' };
+    'W', 'Y', '*', '-', 'Z', 'U', 'B', 'X', 'J' };
 
 const char * const AminoAcid::AA_TLA[]
 = { "Ala", "Cys", "Asp", "Glu", "Phe", "Gly", "His", "Ile", "Lys",
     "Leu", "Met", "Asn", "Pro", "Gln", "Arg", "Ser", "Thr", "Val",
-    "Trp", "Tyr", "STP", "GAP", "Glu/Gln", "Sec", "Asp/Asn", "Any" };
+    "Trp", "Tyr", "STP", "GAP", "Glu/Gln", "Sec", "Asp/Asn", "Any",
+    "Leu/Ile" };
 
 const AminoAcid AminoAcid::A(AminoAcid::AA_A);
 const AminoAcid AminoAcid::C(AminoAcid::AA_C);
@@ -39,6 +40,7 @@ const AminoAcid AminoAcid::Z(AminoAcid::AA_Z);
 const AminoAcid AminoAcid::U(AminoAcid::AA_U);
 const AminoAcid AminoAcid::B(AminoAcid::AA_B);
 const AminoAcid AminoAcid::X(AminoAcid::AA_X);
+const AminoAcid AminoAcid::J(AminoAcid::AA_J);
 
 AminoAcid::AminoAcid()
   : rep_(AA_Z)
@@ -74,6 +76,7 @@ AminoAcid::AminoAcid(char c)
   case 'U': rep_ = AA_U; break;
   case 'B': rep_ = AA_B; break;
   case 'X': rep_ = AA_X; break;
+  case 'J': rep_ = AA_J; break;
   default:
     throw ParseException
       (std::string(),
