@@ -239,7 +239,7 @@ CodonAlign::align(NTSequence& ref, NTSequence& target, int maxFrameShifts)
   } else {
     ref = refCodonAligned;
     target = targetCodonAligned;
-
+/*
     std::cerr << "Scores: " << ntScore << " " << ntCodonScore << " " << bestScore << std::endl;
     std::cerr << refNTAligned.asString() << std::endl;
     std::cerr << targetNTAligned.asString() << std::endl;
@@ -247,7 +247,7 @@ CodonAlign::align(NTSequence& ref, NTSequence& target, int maxFrameShifts)
     std::cerr << targetCodonAligned.asString() << std::endl;
     std::cerr << bestRefAA.asString() << std::endl;
     std::cerr << bestTargetAA.asString() << std::endl;
-
+*/
     return std::make_pair(ntCodonScore, 0);
   }
 }
