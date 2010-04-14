@@ -9,18 +9,14 @@
  */
 namespace seq {
 /**
- * Error thrown by CodonAlign when apparent frame shifts cannot be corrected.
- *
- * Details in CodonAlign.
- */
-class FrameShiftError : public std::exception
+  * Thrown when alignment failed.
+  */
+class AlignmentError : public std::exception
 {
 public:
-  FrameShiftError(double ntScore, double codonScore,
+  AlignmentError(double ntScore, double codonScore,
 		  const NTSequence& ntRef, const NTSequence& ntTarget);
-  ~FrameShiftError() throw();
-
-  const char *what() const throw() { return "Frameshift error"; }
+  ~AlignmentError() throw();
 
   /** %Nucleotide alignment score.
    */
@@ -42,6 +38,22 @@ private:
   double ntScore_, codonScore_;
   NTSequence ntRef_, ntTarget_;
 };
+
+/**
+ * Error thrown by CodonAlign when apparent frame shifts cannot be corrected.
+ *
+ * Details in CodonAlign.
+ */
+class FrameShiftError : public AlignmentError
+{
+public:
+  FrameShiftError(double ntScore, double codonScore,
+		  const NTSequence& ntRef, const NTSequence& ntTarget);
+  ~FrameShiftError() throw();
+
+  const char *what() const throw() { return "Frameshift error"; }
+};
+
 
 class CodonAlign {
 public:

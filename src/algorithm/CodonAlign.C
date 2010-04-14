@@ -92,9 +92,8 @@ CodonAlign::align(NTSequence& ref, NTSequence& target, int maxFrameShifts)
   NTSequence targetNTAligned = target;
   double ntScore = algorithm_->align(refNTAligned, targetNTAligned);
 
-  if(ntScore < 200){
-	return std::make_pair(ntScore,0);
-  }
+  if(ntScore < 200)
+    throw AlignmentError(ntScore,0,refNTAligned,targetNTAligned);
 
   int bestFrameShift = -1;
   double bestScore = -1E10;
@@ -252,12 +251,24 @@ CodonAlign::align(NTSequence& ref, NTSequence& target, int maxFrameShifts)
   }
 }
 
+AlignmentError::AlignmentError(double ntScore, double codonScore,
+				 const NTSequence& ntRef,
+				 const NTSequence& ntTarget)
+  :ntScore_(ntScore),codonScore_(codonScore),ntRef_(ntRef),ntTarget_(ntTarget)
+{ }
+
+AlignmentError::~AlignmentError() throw()
+{ }
+
+
 FrameShiftError::FrameShiftError(double ntScore, double codonScore,
 				 const NTSequence& ntRef,
 				 const NTSequence& ntTarget)
+  :AlignmentError(ntScore,codonScore,ntRef,ntTarget)
 { }
 
 FrameShiftError::~FrameShiftError() throw()
 { }
 
 };
+
