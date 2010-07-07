@@ -253,8 +253,11 @@ CodonAlign::align(NTSequence& ref, NTSequence& target, int maxFrameShifts)
 
 AlignmentError::AlignmentError(double ntScore, double codonScore,
 				 const NTSequence& ntRef,
-				 const NTSequence& ntTarget)
-  :ntScore_(ntScore),codonScore_(codonScore),ntRef_(ntRef),ntTarget_(ntTarget)
+				 const NTSequence& ntTarget,
+				 const std::string& message)
+  :ntScore_(ntScore),codonScore_(codonScore),
+   ntRef_(ntRef),ntTarget_(ntTarget),
+   message_(message)
 { }
 
 AlignmentError::~AlignmentError() throw()
@@ -264,7 +267,7 @@ AlignmentError::~AlignmentError() throw()
 FrameShiftError::FrameShiftError(double ntScore, double codonScore,
 				 const NTSequence& ntRef,
 				 const NTSequence& ntTarget)
-  :AlignmentError(ntScore,codonScore,ntRef,ntTarget)
+  :AlignmentError(ntScore,codonScore,ntRef,ntTarget,std::string("Frameshift error"))
 { }
 
 FrameShiftError::~FrameShiftError() throw()

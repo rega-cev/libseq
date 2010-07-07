@@ -15,8 +15,9 @@ class AlignmentError : public std::exception
 {
 public:
   AlignmentError(double ntScore, double codonScore,
-		  const NTSequence& ntRef, const NTSequence& ntTarget);
-  ~AlignmentError() throw();
+		  const NTSequence& ntRef, const NTSequence& ntTarget,
+		  const std::string& message = std::string("Alignment error."));
+  virtual ~AlignmentError() throw();
 
   /** %Nucleotide alignment score.
    */
@@ -34,7 +35,12 @@ public:
    */
   const NTSequence& nucleotideAlignedTarget() const { return ntTarget_; }
 
+  /** Error message
+   */
+  const std::string& message() const{ return message_; }
+
 private:
+  std::string message_;
   double ntScore_, codonScore_;
   NTSequence ntRef_, ntTarget_;
 };
