@@ -1,4 +1,5 @@
 #include <fstream>
+#include <algorithm>
 
 #include "NTSequence.h"
 #include "ParseException.h"
@@ -160,6 +161,40 @@ void writeFastaEntry(std::ostream& o,
       int s = i * 60;
       o << sequence.substr(s, 60) << std::endl;
     }
+  }
+}
+
+void writeStockholm(std::ostream& o, const std::set<NTSequence>& sequences, int length, int labelsize, int seqsize, int pos)
+{
+  if(labelsize < 1 && seqsize < 1){
+    for(std::set<NTSequence>::const_iterator i = sequences.begin();
+        i != sequences.end(); ++i){
+      labelsize = std::max(labelsize, (int)i->name().length());
+      seqsize = std::max(seqsize, (int)i->size());
+    }
+
+    o << "# STOCKHOLM 1.0" << std::endl;
+  }
+
+  int epos = pos+length - (labelsize + 1);
+  for(std::set<NTSequence>::const_iterator i = sequences.begin();
+      i != sequences.end(); ++i){
+    o << i->name();
+    for(int j = 0; j < labelsize - i->name().length() + 1; ++j)
+      o << ' ';
+    
+    int n = std::min(epos, (int)i->size());
+    for(int spos=pos; spos<n; ++spos)
+      o << (*i)[spos];
+  
+    o << std::endl;
+  }
+
+  if(epos >= seqsize){
+    o << "//";
+  }
+  else{
+    writeStockholm(o, sequences, length, labelsize, seqsize, epos);
   }
 }
 
