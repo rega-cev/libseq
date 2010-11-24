@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <set>
 
 #include "ParseException.h"
 #include "Nucleotide.h"
@@ -107,6 +108,14 @@ private:
   void iterateNonAmbiguous(const NTSequence& head,
 			   std::vector<NTSequence>& result) const;
 };
+
+/**
+ * Write a set of sequences to Stockholm format
+ */
+extern void writeStockholm(std::ostream& o,
+                           const std::set<NTSequence>& sequences,
+                           int length=10000, int labelsize=0,
+                           int seqsize=0, int pos=0);
 
 /**
  * Read a nucleotide sequence in FASTA format from the given stream.
