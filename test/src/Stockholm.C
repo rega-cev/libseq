@@ -16,7 +16,7 @@ int main(int argc, char **argv)
     length = atoi(argv[3]);
   }
 
-  std::set<seq::NTSequence> sequences;
+  std::vector<seq::NTSequence> sequences;
 
   std::ifstream f_seqs(argv[1]);
   while (f_seqs) {
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
       f_seqs >> s;
 
       if (f_seqs) {
-	sequences.insert(s);
+	sequences.push_back(s);
       }
     } catch (seq::ParseException& e) {
       if (e.recovered())

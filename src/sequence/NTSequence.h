@@ -113,7 +113,7 @@ private:
  * Write a set of sequences to Stockholm format
  */
 extern void writeStockholm(std::ostream& o,
-                           const std::set<NTSequence>& sequences,
+                           const std::vector<NTSequence>& sequences,
                            int length=10000, int labelsize=0,
                            int seqsize=0, int pos=0);
 

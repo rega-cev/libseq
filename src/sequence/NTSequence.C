@@ -164,11 +164,11 @@ void writeFastaEntry(std::ostream& o,
   }
 }
 
-void writeStockholm(std::ostream& o, const std::set<NTSequence>& sequences, int length, int labelsize, int seqsize, int pos)
+void writeStockholm(std::ostream& o, const std::vector<NTSequence>& sequences, int length, int labelsize, int seqsize, int pos)
 {
   if(labelsize < 1 && seqsize < 1){
-    for(std::set<NTSequence>::const_iterator i = sequences.begin();
-        i != sequences.end(); ++i){
+    for(std::vector<NTSequence>::const_iterator i = sequences.begin();
+        i < sequences.end(); ++i){
       labelsize = std::max(labelsize, (int)i->name().length());
       seqsize = std::max(seqsize, (int)i->size());
     }
@@ -177,8 +177,8 @@ void writeStockholm(std::ostream& o, const std::set<NTSequence>& sequences, int 
   }
 
   int epos = pos+length - (labelsize + 1);
-  for(std::set<NTSequence>::const_iterator i = sequences.begin();
-      i != sequences.end(); ++i){
+  for(std::vector<NTSequence>::const_iterator i = sequences.begin();
+      i < sequences.end(); ++i){
     o << i->name();
     for(int j = 0; j < labelsize - i->name().length() + 1; ++j)
       o << ' ';
