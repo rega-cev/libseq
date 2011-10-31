@@ -91,8 +91,8 @@ CodonAlign::align(NTSequence& ref, NTSequence& target, int maxFrameShifts)
   NTSequence refNTAligned = ref;
   NTSequence targetNTAligned = target;
   double ntScore = algorithm_->align(refNTAligned, targetNTAligned);
-  
-  if(ntScore < target.size()*2.5)
+
+  if(ntScore < 200)
     throw AlignmentError(ntScore,0,refNTAligned,targetNTAligned);
 
   int bestFrameShift = -1;
