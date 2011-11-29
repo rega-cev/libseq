@@ -170,7 +170,7 @@ void exportInfile(const std::vector<NTSequence>& sequences)
   }
 }
 
-std::string summary(double *v, int n)
+std::string summary(std::vector<double> &v, int n)
 {
   if (n == 1)
     return boost::lexical_cast<std::string>(v[0]);
@@ -201,7 +201,7 @@ std::string summary(double *v, int n)
 }
 
 
-std::string summary(int *v, int n)
+std::string summary(std::vector<int> &v, int n)
 {
   if (n == 1)
     return conclusions[v[0]];
@@ -248,8 +248,13 @@ int main(int argc, char **argv)
 
     int n = allsequences.size() / replicates;
 
-    int partn[n], conclusion[n];
-    double S[n], khat[n], theta[n], theta2[n], D[n];
+    std::vector<int> partn(n);
+	std::vector<int> conclusion(n);
+    std::vector<double> S(n);
+	std::vector<double> khat(n);
+	std::vector<double> theta(n);
+	std::vector<double> theta2(n);
+	std::vector<double> D(n);
 
     for (int i = 0; i < replicates; ++i) {
       std::vector<NTSequence> sequences(allsequences.begin() + i*n,
