@@ -6,6 +6,15 @@
 
 namespace {
 
+#ifdef _WIN32
+
+double drand48()
+{
+	return (double(rand()) / RAND_MAX);
+}
+
+#endif
+
 int sampleUniform(int one, int two)
 {
   double d = drand48();
