@@ -11,10 +11,12 @@ Build instructions
 ------------------
 
 Create a temporary build directory (for example within the project root)
+The CMAKE_INSTALL_PREFIX variable can point to any directory you want to 
+install the libseq headers and library in
 
 $ mkdir build
 $ cd build
-$ cmake ../
+$ cmake -DCMAKE_INSTALL_PREFIX=~/soft/libseq ../
 $ make
 
 To build the simple test programs
