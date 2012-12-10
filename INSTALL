@@ -16,7 +16,7 @@ install the libseq headers and library in
 
 $ mkdir build
 $ cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=~/soft/libseq ../
+$ cmake -DCMAKE_INSTALL_PREFIX=~/soft/libseq -DBOOST_PREFIX=~/soft/boost1.52/ ../
 $ make
 
 To build the simple test programs
