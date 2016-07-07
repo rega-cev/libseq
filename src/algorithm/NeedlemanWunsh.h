@@ -9,14 +9,15 @@
  */
 namespace seq {
 
-class NeedlemanWunsh : public AlignmentAlgorithm {
+class NeedlemanWunsh : public AlignmentAlgorithm 
+{
   public:
-  NeedlemanWunsh(double gapOpenScore = -10,
-				 double gapExtensionScore = -3.3,
-				 double **ntWeightMatrix = 
-				 AlignmentAlgorithm::IUB(),
-				 double **aaWeightMatrix = 
-				 AlignmentAlgorithm::BLOSUM30());
+    NeedlemanWunsh(double gapOpenScore = -10,
+		   double gapExtensionScore = -3.3,
+		   double **ntWeightMatrix = 
+		   AlignmentAlgorithm::IUB(),
+		   double **aaWeightMatrix = 
+		   AlignmentAlgorithm::BLOSUM30());
   /**
    * Pair-wise align two nucleotide sequences, using a modified
    * NeedleMan-Wunsh algorithm.

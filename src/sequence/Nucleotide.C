@@ -1,6 +1,8 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <set>
+#include <stdexcept>
+
 #include "ParseException.h"
 #include "Nucleotide.h"
 
@@ -102,6 +104,31 @@ void Nucleotide::sampleAmbiguity()
   }
 }
 
+Nucleotide Nucleotide::reverseComplement() const
+{
+  switch (rep_) {
+  case NT_A: return NT_T;
+  case NT_C: return NT_G;
+  case NT_G: return NT_C;
+  case NT_T: return NT_A;
+  case NT_GAP: return NT_GAP;
+  case NT_M: return /* AC -> TG */ NT_K;
+  case NT_R: return /* AG -> TC */ NT_Y;
+  case NT_W: return /* AT -> TA */ NT_W;
+  case NT_S: return /* CG -> GC */ NT_S;
+  case NT_Y: return /* CT -> GA */ NT_R;
+  case NT_K: return /* GT -> CA */ NT_M;
+  case NT_V: return /* ACG -> TGC */ NT_B;
+  case NT_H: return /* ACT -> TGA */ NT_D;
+  case NT_D: return /* AGT -> TCA */ NT_H;
+  case NT_B: return /* CGT -> GCA */ NT_V;
+  case NT_N: return NT_N;
+  default:
+    std::cerr << rep_ << std::endl;
+    assert(false);
+  }
+}
+
 Nucleotide Nucleotide::singleNucleotide(std::set<Nucleotide>& nucleotides)
 {
 	std::set<Nucleotide>::iterator itgap = nucleotides.find(GAP);
@@ -144,7 +171,9 @@ Nucleotide Nucleotide::singleNucleotide(std::set<Nucleotide>& nucleotides)
 		return Y;
 	if (nta && ntg)
 		return R;		
-	assert(false);
+
+	throw std::runtime_error
+	  ("Internal error in Nucleotide::singleNucleotide()");
 }
 
 /**

@@ -28,8 +28,8 @@ class AlignmentAlgorithm {
      */
     virtual double align(AASequence& seq1, AASequence& seq2) = 0;
 
-  virtual double computeAlignScore(const NTSequence& seq1, 
-				   const NTSequence& seq2) = 0;
+    virtual double computeAlignScore(const NTSequence& seq1, 
+				     const NTSequence& seq2) = 0;
 
     /**
      * Similarity weights matrix for nucleotides.

@@ -47,6 +47,18 @@ void NTSequence::sampleAmbiguities()
   }
 }
 
+NTSequence NTSequence::reverseComplement() const
+{
+  NTSequence result(size());
+  result.name_ = name_;
+  result.description_ = description_;
+
+  for (unsigned i = 0; i < size(); ++i)
+    result[size() - i - 1] = (*this)[i].reverseComplement();
+
+  return result;
+}
+
 void NTSequence::nonAmbiguousSequences(std::vector<NTSequence>& result) const
 {
   iterateNonAmbiguous(NTSequence(), result);
