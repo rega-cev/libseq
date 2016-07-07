@@ -70,6 +70,8 @@ public:
    */
   void sampleAmbiguities();
 
+  NTSequence reverseComplement() const;
+
   /**
    * Add all the possible non-ambiguous sequences possibly represented by
    * this sequence to result.

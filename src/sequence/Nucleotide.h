@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include <iostream>
 #include <vector>
+#include <set>
 
 #include "ParseException.h"
 
@@ -141,10 +142,17 @@ public:
    */
   void sampleAmbiguity();
 
+  Nucleotide reverseComplement() const;
+
   /**
    * Get all non ambiguous nucleotides represented by this nucleotide.
    */ 
   void nonAmbiguousNucleotides(std::vector<Nucleotide>& result) const;
+
+  /**
+   * Get the single nucleotide representing all given nucleotides.
+   */
+  static Nucleotide singleNucleotide(std::set<Nucleotide>& nucleotides);
 
   /**
    * So that you can use it as a key for STL containers.

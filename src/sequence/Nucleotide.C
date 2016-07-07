@@ -1,5 +1,6 @@
 #include <ctype.h>
 #include <stdlib.h>
+#include <stdexcept>
 
 #include "ParseException.h"
 #include "Nucleotide.h"
@@ -91,6 +92,78 @@ void Nucleotide::sampleAmbiguity()
     std::cerr << rep_ << std::endl;
     assert(false);
   }
+}
+
+Nucleotide Nucleotide::reverseComplement() const
+{
+  switch (rep_) {
+  case NT_A: return NT_T;
+  case NT_C: return NT_G;
+  case NT_G: return NT_C;
+  case NT_T: return NT_A;
+  case NT_GAP: return NT_GAP;
+  case NT_M: return /* AC -> TG */ NT_K;
+  case NT_R: return /* AG -> TC */ NT_Y;
+  case NT_W: return /* AT -> TA */ NT_W;
+  case NT_S: return /* CG -> GC */ NT_S;
+  case NT_Y: return /* CT -> GA */ NT_R;
+  case NT_K: return /* GT -> CA */ NT_M;
+  case NT_V: return /* ACG -> TGC */ NT_B;
+  case NT_H: return /* ACT -> TGA */ NT_D;
+  case NT_D: return /* AGT -> TCA */ NT_H;
+  case NT_B: return /* CGT -> GCA */ NT_V;
+  case NT_N: return NT_N;
+  default:
+    std::cerr << rep_ << std::endl;
+    assert(false);
+  }
+}
+
+Nucleotide Nucleotide::singleNucleotide(std::set<Nucleotide>& nucleotides)
+{
+	std::set<Nucleotide>::iterator itgap = nucleotides.find(GAP);
+	if(itgap != nucleotides.end())
+		nucleotides.erase(itgap);
+
+	if (nucleotides.size() == 1)
+		return *nucleotides.begin();
+	
+	std::set<Nucleotide> all;
+	for(std::set<Nucleotide>::iterator it = nucleotides.begin(); it != nucleotides.end(); ++it) {
+		std::vector<Nucleotide> t;
+		it->nonAmbiguousNucleotides(t);
+		all.insert(t.begin(), t.end());
+	}
+	bool nta = all.find(A) != all.end();
+	bool ntc = all.find(C) != all.end();
+	bool ntg = all.find(G) != all.end();
+	bool ntt = all.find(T) != all.end();
+
+	if (nta && ntc && ntg && ntt)
+		return N;
+	if (nta && ntc && ntg)
+		return V;
+	if (nta && ntc && ntt)
+		return H;
+	if (nta && ntg && ntt)
+		return D;
+	if (ntc && ntg && ntt)
+		return B;
+ 	if (nta && ntc)
+		return M;
+	if (ntg && ntt)
+		return K;
+	if (nta && ntt)
+		return W;
+	if (ntg && ntc)
+		return S;
+	if (ntc && ntt)
+		return Y;
+	if (nta && ntg)
+		return R;		
+
+	throw std::runtime_error
+	  ("Internal error in Nucleotide::singleNucleotide()");
 }
 
 /**
