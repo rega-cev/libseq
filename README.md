@@ -4,9 +4,9 @@ libseq is a library to manipulate biological sequences (nucleotide or amino acid
 
 ###Goal
 
-This library originated as part of my PhD project, which involves molecular evolution of HIV, with respect to resistance development against antiretroviral products.
+This library provides a limited set of what can be generally found in the biojava, bioperl and biopython projects, in C++. The scope is however limited to efficient and simple sequence manipulation. 
 
-It provides a limited set of what can be generally found in the biojava, bioperl and biopython projects, in C++. The scope is however limited to efficient and simple sequence manipulation. Application features, such as sequence alignment, are beyond the scope of this library.
+libseq originated from the [PhD project of Koen Deforche] (defended in February 2008), which involved molecular evolution of HIV, with respect to resistance development against antiretroviral products.
 
 ###Features
 
@@ -18,14 +18,15 @@ It provides a limited set of what can be generally found in the biojava, bioperl
 
 ###Status
 
-The current public release (Jul, 17 2006), [libseq-0.3.tar.gz], contains the basic functionality, which was needed so far for my PhD. It has been exhaustively tested in various projects small and large. You are welcome to add features you find missing.
+The [current public release] (v0.3, released on July, 17 2006), contains the basic functionality, which was needed for Koen's PhD. It has been exhaustively tested in various projects small and large. You are welcome to add features you find missing.
 
 ###Documentation
+* [API documentation]
 
 ####Installation
 
-I have switched to cmake for the build process, so I am looking forward to hear from anyone being succesfull to build on anyhthing other than Linux, and I am especially curious for experiences with Microsoft development tools ?
-There is an install file with build instructions on Linux, which is follows a standard CMake build and install process.
+We use CMake for the build process, and tested this on GNU/Linux, MacOS and Windows (Visual Studio C++ Express).
+There is an [INSTALL file] with build instructions on GNU/Linux and MacOS, which follows a standard CMake build and install process.
 
 ####Reference
 * [API documentation]
@@ -34,8 +35,11 @@ There is an install file with build instructions on Linux, which is follows a st
 ###GitHub
 The project is hosted at [GitHub].
 
-[libseq-0.3.tar.gz]: <http://prdownloads.sourceforge.net/libseq/libseq-0.3.tar.gz?download>
-[API documentation]: <http://libseq.sourceforge.net/0.3/doxygen/namespaceseq.html>
-[NTFastaRead.C]: <http://libseq.sourceforge.net/0.3/example/NTFastaRead.C>
-[AAFastaRead.C]: <http://libseq.sourceforge.net/0.3/example/AAFastaRead.C>
+[PhD project of Koen Deforche]:<http://rega.kuleuven.be/cev/avd/publications/thesises>
+[current public release]:<https://github.com/rega-cev/libseq/releases/tag/v0.3>
+[API documentation]: <http://rega-cev.github.io/libseq/doc/doxygen-html/v0.3> 
+[INSTALL file]: <https://github.com/rega-cev/libseq/blob/master/INSTALL>
+[NTFastaRead.C]: <https://github.com/rega-cev/libseq/blob/master/test/src/NTFastaRead.C>
+[AAFastaRead.C]: <https://github.com/rega-cev/libseq/blob/master/test/src/AAFastaRead.C> 
+
 [GitHub]: <https://github.com/rega-cev/libseq/>
