@@ -7,6 +7,11 @@ Requirements
 * cmake (www.cmake.org)
 * C++ environment
 
+Dependenies
+-----------
+
+* Boost >= v1.31.0 (www.boost.org) 
+
 Build instructions
 ------------------
 
@@ -42,3 +47,8 @@ Author
 ------
 
 Koen Deforche (koen.deforche@gmail.com)
+
+Contact
+-------
+
+Ewout Vanden Eynden (ewout.vandeneynden@kuleuven.be)
