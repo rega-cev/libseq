@@ -6,7 +6,7 @@ libseq is a library to manipulate biological sequences (nucleotide or amino acid
 
 This library provides a limited set of what can be generally found in the biojava, bioperl and biopython projects, in C++. The scope is however limited to efficient and simple sequence manipulation. 
 
-libseq originated from the [PhD project of Koen Deforche] (defended in February 2008), which involved molecular evolution of HIV, with respect to resistance development against antiretroviral products.
+libseq originated from the [PhD project of Koen Deforche], this project was defended in February 2008. The project involved molecular evolution of HIV, with respect to resistance development against antiretroviral products.
 
 ###Features
 
