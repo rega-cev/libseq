@@ -77,7 +77,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = /home/kdforc0/project/c++/libseq/src/
+INPUT                  = ./src/
 FILE_PATTERNS          = *.c \
                          *.cc \
                          *.cxx \
