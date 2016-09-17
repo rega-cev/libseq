@@ -18,7 +18,7 @@ libseq originated from the [PhD project of Koen Deforche], this project was defe
 
 ###Status
 
-The [current public release]:<https://github.com/rega-cev/libseq/releases/tag/v0.3> (v0.3, released on July, 17 2006), contains the basic functionality, which was needed for Koen's PhD. It has been exhaustively tested in various projects small and large. You are welcome to add features you find missing.
+The [current public release](https://github.com/rega-cev/libseq/releases/tag/v0.3) (v0.3, released on July, 17 2006), contains the basic functionality, which was needed for Koen's PhD. It has been exhaustively tested in various projects small and large. You are welcome to add features you find missing.
 
 ###Documentation
 * [API documentation]
